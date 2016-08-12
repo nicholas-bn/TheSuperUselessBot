@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="lib" path="D:/TRAVAIL/Perso/pircbot-1.5.0/pircbot-1.5.0/pircbot.jar"/>
+	<classpathentry kind="lib" path="D:/TRAVAIL/Perso/commons-lang3-3.4-bin/commons-lang3-3.4/commons-lang3-3.4.jar"/>
+	<classpathentry kind="lib" path="D:/TRAVAIL/Perso/httpcomponents-client-4.5.2-bin/httpcomponents-client-4.5.2/lib/httpclient-4.5.2.jar"/>
+	<classpathentry kind="lib" path="D:/TRAVAIL/Perso/httpcomponents-core-4.4.5-bin/httpcomponents-core-4.4.5/lib/httpcore-4.4.5.jar"/>
+	<classpathentry kind="lib" path="D:/TRAVAIL/Perso/httpcomponents-client-4.5.2-bin/httpcomponents-client-4.5.2/lib/commons-codec-1.9.jar"/>
+	<classpathentry kind="lib" path="D:/TRAVAIL/Perso/httpcomponents-client-4.5.2-bin/httpcomponents-client-4.5.2/lib/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="D:/TRAVAIL/Perso/httpcomponents-client-4.5.2-bin/httpcomponents-client-4.5.2/lib/fluent-hc-4.5.2.jar"/>
+	<classpathentry kind="lib" path="D:/TRAVAIL/Perso/httpcomponents-client-4.5.2-bin/httpcomponents-client-4.5.2/lib/httpclient-cache-4.5.2.jar"/>
+	<classpathentry kind="lib" path="D:/TRAVAIL/Perso/httpcomponents-client-4.5.2-bin/httpcomponents-client-4.5.2/lib/httpclient-win-4.5.2.jar"/>
+	<classpathentry kind="lib" path="D:/TRAVAIL/Perso/httpcomponents-client-4.5.2-bin/httpcomponents-client-4.5.2/lib/httpcore-4.4.4.jar"/>
+	<classpathentry kind="lib" path="D:/TRAVAIL/Perso/httpcomponents-client-4.5.2-bin/httpcomponents-client-4.5.2/lib/httpmime-4.5.2.jar"/>
+	<classpathentry kind="lib" path="D:/TRAVAIL/Perso/httpcomponents-client-4.5.2-bin/httpcomponents-client-4.5.2/lib/jna-4.1.0.jar"/>
+	<classpathentry kind="lib" path="D:/TRAVAIL/Perso/httpcomponents-client-4.5.2-bin/httpcomponents-client-4.5.2/lib/jna-platform-4.1.0.jar"/>
+	<classpathentry kind="lib" path="D:/TRAVAIL/Perso/httpcomponents-core-4.4.5-bin/httpcomponents-core-4.4.5/lib/commons-cli-1.2.jar"/>
+	<classpathentry kind="lib" path="D:/TRAVAIL/Perso/httpcomponents-core-4.4.5-bin/httpcomponents-core-4.4.5/lib/httpcore-ab-4.4.5.jar"/>
+	<classpathentry kind="lib" path="D:/TRAVAIL/Perso/httpcomponents-core-4.4.5-bin/httpcomponents-core-4.4.5/lib/httpcore-nio-4.4.5.jar"/>
+	<classpathentry kind="lib" path="D:/TRAVAIL/Perso/java-json.jar/java-json.jar"/>
+	<classpathentry kind="lib" path="D:/TRAVAIL/Perso/json-simple.jar/json-simple.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
