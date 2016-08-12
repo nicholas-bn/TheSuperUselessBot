@@ -21,6 +21,7 @@ import org.json.JSONObject;
 
 public class TwitchBot extends PircBot  {
 	
+	
 	//////////
 	// PARAM
 	//////////
