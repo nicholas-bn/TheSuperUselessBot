@@ -63,10 +63,10 @@ public class Configuration {
 		
 		File f = new File("d:\\TRAVAIL\\Perso\\Jar_BOT\\config_bot.ini");
 		if(f.exists() && !f.isDirectory()) { 
-			System.out.println("EXISTTTTTEEEEEEEE");
+			System.out.println("Le fichier \"config_bot.ini\" a été trouvé.");
 		}
 		else {
-			System.out.println("EXISTTTTTEEEEEEEE PAAAAAAAAAAAAS");
+			System.out.println("Le fichier \"config_bot.ini\" n'a pas été trouvé.");
 		}
 		
 		Wini ini;
