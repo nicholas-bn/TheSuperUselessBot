@@ -15,6 +15,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.math.NumberUtils;
+import org.jibble.pircbot.IrcException;
+import org.jibble.pircbot.NickAlreadyInUseException;
 import org.jibble.pircbot.PircBot;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,13 +39,17 @@ public class TwitchBot extends PircBot  {
 	// CONSTRUCTEUR
 	////////////////
 	
-	public TwitchBot(String channelToJoin) {
-		this.channelToJoin = new String(channelToJoin);
+	public TwitchBot(Configuration config) throws NickAlreadyInUseException, IOException, IrcException {
+		this.channelToJoin = new String(config.getChannelToJoin());
 		CHIFFRERANDOM = false;
 		checkModo = true;
 		listModo=new ArrayList<String>();
-		this.setName("TheSuperUselessBot");
+		this.setName(config.getBotName());
 		this.isConnected();
+		this.setVerbose(true);
+		this.connect(config.getUrl(), config.getPort(), config.getoAuth());
+		this.joinChannel("#"+config.getChannelToJoin());
+		this.sendAction("#"+config.getChannelToJoin(), " vient de se connecter !");
 	}
 	////////////
 	// METHODES
