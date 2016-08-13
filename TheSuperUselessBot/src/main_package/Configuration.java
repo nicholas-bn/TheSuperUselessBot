@@ -1,5 +1,11 @@
 package main_package;
 
+import java.io.File;
+import java.io.IOException;
+
+import org.ini4j.InvalidFileFormatException;
+import org.ini4j.Wini;
+
 public class Configuration {
 
 	public String 	channelToJoin;
@@ -10,7 +16,7 @@ public class Configuration {
 
 
 	public Configuration(){
-		this.setup();
+		this.setupConfig();
 	}
 	
 	public String getoAuth() {
@@ -53,14 +59,34 @@ public class Configuration {
 		this.botName = botName;
 	}
 
-	public void setup() {
+	public void setupConfig(){
 		
-		// TODO : allez chercher ces infos dans un fichier externe
-		this.setBotName("TheSuperUselessBot");
-		this.setChannelToJoin("thronghar");
-		this.setoAuth("oauth:i1x9cplwbxbf0gay6hwhecajw2qei6");
-		this.setPort(6667);
-		this.setUrl("irc.twitch.tv");
+		File f = new File("d:\\TRAVAIL\\Perso\\Jar_BOT\\config_bot.ini");
+		if(f.exists() && !f.isDirectory()) { 
+			System.out.println("EXISTTTTTEEEEEEEE");
+		}
+		else {
+			System.out.println("EXISTTTTTEEEEEEEE PAAAAAAAAAAAAS");
+		}
+		
+		Wini ini;
+		try {
+			ini = new Wini(f);
+			System.out.println();
+			this.setBotName(ini.get("config", "botName"));
+			this.setChannelToJoin(ini.get("config", "channel"));
+			this.setoAuth(ini.get("config", "oauth"));
+			this.setPort(ini.get("config", "port", int.class));
+			this.setUrl(ini.get("config", "url"));
+		} catch (InvalidFileFormatException e) {
+			// TODO Auto-generated catch block
+			System.out.println("InvalidFileFormatException");
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("IOException");
+			e.printStackTrace();
+		}
 	}
 	
 }

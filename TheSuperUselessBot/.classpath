@@ -20,5 +20,6 @@
 	<classpathentry kind="lib" path="D:/TRAVAIL/Perso/httpcomponents-core-4.4.5-bin/httpcomponents-core-4.4.5/lib/httpcore-nio-4.4.5.jar"/>
 	<classpathentry kind="lib" path="D:/TRAVAIL/Perso/java-json.jar/java-json.jar"/>
 	<classpathentry kind="lib" path="D:/TRAVAIL/Perso/json-simple.jar/json-simple.jar"/>
+	<classpathentry kind="lib" path="D:/TRAVAIL/Perso/Jar_BOT/ini4j-0.5.4-bin/ini4j-0.5.4/ini4j-0.5.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
