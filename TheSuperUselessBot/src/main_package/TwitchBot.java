@@ -34,6 +34,7 @@ public class TwitchBot extends PircBot  {
 	public int chiffreCHIFFRERANDOM = 0;
 	public String channelToJoin;
 	public ArrayList<String> listModo;
+	public ArrayList<Commande> listCommandes;
 
 	////////////////
 	// CONSTRUCTEUR
@@ -44,6 +45,7 @@ public class TwitchBot extends PircBot  {
 		CHIFFRERANDOM = false;
 		checkModo = true;
 		listModo=new ArrayList<String>();
+		listCommandes=config.setupCommands();
 		this.setName(config.getBotName());
 		this.isConnected();
 		this.setVerbose(true);
@@ -65,6 +67,11 @@ public class TwitchBot extends PircBot  {
 
 	public void onMessage(String channel, String sender, String login, String hostname, String message) {
 
+		// On vérifie dans la liste si le message envoyé correspond ou pas à un message dans le JSON.
+		for(Commande c : listCommandes){
+			c.checkCommand(this, channel, sender, login, hostname, message);
+		}
+		
 		System.out.println(message);
 		
 

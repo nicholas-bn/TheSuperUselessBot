@@ -96,8 +96,8 @@ public class Configuration {
 	}
 	
 	public ArrayList<Commande> setupCommands(){
-	ArrayList<Commande> returnCommand = new ArrayList<Commande>();
 		
+		ArrayList<Commande> returnCommand = new ArrayList<Commande>();		
 		JSONParser parser = new JSONParser();
 
         try {
