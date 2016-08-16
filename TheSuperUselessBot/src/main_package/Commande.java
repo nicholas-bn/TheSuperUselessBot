@@ -25,14 +25,14 @@ public class Commande {
 		if(this.isActivated()) {
 			if(!this.isRegExp()){ // si non REGEXP
 				if(this.getNomCommande().equalsIgnoreCase(message)){
-					t.sendMessage(channel, this.getResultatCommande());
+					t.sendMessage(channel, this.getResultatCommande().replaceAll("@sender", sender));
 					return true;
 				}
 			} else { //Si REGEXP
 				pattern = Pattern.compile(this.getNomCommande() ,Pattern.CASE_INSENSITIVE);
 				m = pattern.matcher(message);
 				if(m.matches()){
-					t.sendMessage(channel, this.getResultatCommande());
+					t.sendMessage(channel, this.getResultatCommande().replaceAll("@sender", sender));
 					return true;
 				}
 			}

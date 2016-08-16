@@ -78,15 +78,6 @@ public class TwitchBot extends PircBot  {
 		if (message.equalsIgnoreCase("info")) {
 			sendMessage(channel, listModo.toString());
 		}
-
-		// modd
-		Pattern pattern0 = Pattern.compile("!ismod.*" ,Pattern.CASE_INSENSITIVE);
-		Matcher m0 = pattern0.matcher(message);
-		if(m0.matches()){
-			ArrayList<String> tempo =new ArrayList<String>(Arrays.asList(message.split(" ")));
-			this.sendMessage(channel,"["+tempo.get(1)+"]"+" "+isMod(tempo.get(1)));
-		}
-		
 	
 		// POLL
 		Pattern pattern = Pattern.compile("!poll *//.*//.*//.*" ,Pattern.CASE_INSENSITIVE);
@@ -119,21 +110,10 @@ public class TwitchBot extends PircBot  {
 			System.exit(0);
 		}
 		
-
-		// FROST NOOB
-		if (message.equalsIgnoreCase("frost c un peu un noob")) {
-			sendMessage(channel, "J'avoue " + sender + " Kappa");
-		}
-		
 		// SUICIDE
 		if (message.equalsIgnoreCase("!suicide")) {
 			sendMessage(channel, "rip " + sender);
 			sendMessage(channel, ".timeout " + sender + " 10");
-		}
-
-		// DYNOXYZ
-		if (message.equalsIgnoreCase("!Dynoxyz")) {
-			sendMessage(channel, "Dynoxyz ? Celui qui arrive pas a defuse les !plant ? Kappa ");
 		}
 
 		//CHIFFRE RANDOM debut		
@@ -150,18 +130,6 @@ public class TwitchBot extends PircBot  {
 				sendMessage(channel, sender + " a trouve le bon chiffre ! (" + chiffreCHIFFRERANDOM + ")");
 				CHIFFRERANDOM=false;
 			}
-		}
-		
-		// ANANAS
-		pattern = Pattern.compile(".*ananas.*" ,Pattern.CASE_INSENSITIVE);
-		m = pattern.matcher(message);
-		if(m.matches()){
-			Random rn = new Random();
-			chiffreCHIFFRERANDOM = rn.nextInt(1 - 0 + 1) + 0;
-			if(chiffreCHIFFRERANDOM==0)
-				sendMessage(channel, "Comment oses-tu parler des Ananas " + sender +"?!");
-			else
-				sendMessage(channel, sender +", tu ne respectes pas les Ananas ? Heretique !!");
 		}
 	}
 	
