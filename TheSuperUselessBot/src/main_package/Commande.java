@@ -17,7 +17,7 @@ public class Commande {
 		this.setRegExp(isRegExp);
 	}
 	
-	public boolean checkCommand(TwitchBot t, String channel, String sender, String login, String hostname, String message){
+	public String checkCommand(String channel, String sender, String login, String hostname, String message){
 		
 		Pattern pattern;
 		Matcher m;
@@ -25,19 +25,17 @@ public class Commande {
 		if(this.isActivated()) {
 			if(!this.isRegExp()){ // si non REGEXP
 				if(this.getNomCommande().equalsIgnoreCase(message)){
-					t.sendMessage(channel, this.getResultatCommande().replaceAll("@sender", sender));
-					return true;
+					return this.getResultatCommande().replaceAll("@sender", sender);
 				}
 			} else { //Si REGEXP
 				pattern = Pattern.compile(this.getNomCommande() ,Pattern.CASE_INSENSITIVE);
 				m = pattern.matcher(message);
 				if(m.matches()){
-					t.sendMessage(channel, this.getResultatCommande().replaceAll("@sender", sender));
-					return true;
+					return this.getResultatCommande().replaceAll("@sender", sender);
 				}
 			}
 		}
-		return false;
+		return "";
 	}
 	
 

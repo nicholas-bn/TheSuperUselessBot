@@ -69,7 +69,10 @@ public class TwitchBot extends PircBot  {
 
 		// On vérifie dans la liste si le message envoyé correspond ou pas à un message dans le JSON.
 		for(Commande c : listCommandes){
-			c.checkCommand(this, channel, sender, login, hostname, message);
+			String returnCheckCommand = c.checkCommand(channel, sender, login, hostname, message);
+			if (!returnCheckCommand.equals("")){
+				sendMessage(channel, returnCheckCommand);
+			}
 		}
 		
 		System.out.println(message);
