@@ -72,6 +72,7 @@ public class TwitchBot extends PircBot  {
 			String returnCheckCommand = c.checkCommand(channel, sender, login, hostname, message);
 			if (!returnCheckCommand.equals("")){
 				sendMessage(channel, returnCheckCommand);
+				return;
 			}
 		}
 		
@@ -80,6 +81,7 @@ public class TwitchBot extends PircBot  {
 
 		if (message.equalsIgnoreCase("info")) {
 			sendMessage(channel, listModo.toString());
+			return;
 		}
 	
 		// POLL
@@ -89,8 +91,11 @@ public class TwitchBot extends PircBot  {
 			try {
 				if(isMod(sender)){
 					requestAPIStrawpoll(channel, sender, login, hostname, message);
+					return;
 				}else{
 					sendMessage(channel, "NotLikeThis Vous n'avez pas les droits pour creer un strawpoll NotLikeThis");
+					return;
+					
 				}
 					
 			} catch (JSONException | IOException e) {
@@ -117,6 +122,7 @@ public class TwitchBot extends PircBot  {
 		if (message.equalsIgnoreCase("!suicide")) {
 			sendMessage(channel, "rip " + sender);
 			sendMessage(channel, ".timeout " + sender + " 10");
+			return;
 		}
 
 		//CHIFFRE RANDOM debut		
@@ -125,6 +131,7 @@ public class TwitchBot extends PircBot  {
 			CHIFFRERANDOM = true;
 			Random rn = new Random();
 			chiffreCHIFFRERANDOM = rn.nextInt(10 - 0 + 1) + 0;
+			return;
 		}
 		
 		//CHIFFRE RANDOM fin
@@ -133,6 +140,7 @@ public class TwitchBot extends PircBot  {
 				sendMessage(channel, sender + " a trouve le bon chiffre ! (" + chiffreCHIFFRERANDOM + ")");
 				CHIFFRERANDOM=false;
 			}
+			return;
 		}
 	}
 	
