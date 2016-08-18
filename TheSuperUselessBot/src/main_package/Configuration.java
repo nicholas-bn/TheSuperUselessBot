@@ -1,6 +1,7 @@
 package main_package;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import org.ini4j.Wini;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 
 public class Configuration {
@@ -20,11 +22,6 @@ public class Configuration {
 	public int 		port;
 	public String 	url;
 
-
-	public Configuration(){
-		this.setupConfig();
-	}
-	
 	public String getoAuth() {
 		return oAuth;
 	}
@@ -65,20 +62,19 @@ public class Configuration {
 		this.botName = botName;
 	}
 
-	public void setupConfig(){
+	public void setupConfig(String pathToINI){
 		
-		File f = new File("d:\\TRAVAIL\\Perso\\Jar_BOT\\config_bot.ini");
+		File f = new File(pathToINI);
 		if(f.exists() && !f.isDirectory()) { 
 			System.out.println("Le fichier \"config_bot.ini\" a été trouvé.");
 		}
 		else {
-			System.out.println("Le fichier \"config_bot.ini\" n'a pas été trouvé.");
+			System.err.println("Le fichier \"config_bot.ini\" n'a pas été trouvé.");
 		}
 		
 		Wini ini;
 		try {
 			ini = new Wini(f);
-			System.out.println();
 			this.setBotName(ini.get("config", "botName"));
 			this.setChannelToJoin(ini.get("config", "channel"));
 			this.setoAuth(ini.get("config", "oauth"));
@@ -86,22 +82,23 @@ public class Configuration {
 			this.setUrl(ini.get("config", "url"));
 		} catch (InvalidFileFormatException e) {
 			// TODO Auto-generated catch block
-			System.out.println("InvalidFileFormatException");
+			System.err.println("InvalidFileFormatException");
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			System.out.println("IOException");
+			System.err.println("IOException");
 			e.printStackTrace();
 		}
 	}
 	
-	public ArrayList<Commande> setupCommands(){
+	public ArrayList<Commande> setupCommands(String pathToJSON){
 		
 		ArrayList<Commande> returnCommand = new ArrayList<Commande>();		
 		JSONParser parser = new JSONParser();
 
         try {
-            FileReader fileReader = new FileReader("d:\\TRAVAIL\\Perso\\Jar_BOT\\command_list.json");
+            FileReader fileReader = new FileReader(pathToJSON);
+        	System.out.println("Le fichier \"command_list.json\" a été trouvé.");
             JSONObject json = (JSONObject) parser.parse(fileReader);
             JSONArray commands = (JSONArray) json.get("commands");
             
@@ -134,9 +131,16 @@ public class Configuration {
             }
             
 
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        } catch (FileNotFoundException fx) {
+        	System.err.println("Le fichier \"command_list.json\" n'a pas été trouvé.");
+            fx.printStackTrace();
+        } catch (IOException eio) {
+			// TODO Auto-generated catch block
+			eio.printStackTrace();
+		}catch (ParseException pe) {
+			// TODO Auto-generated catch block
+			pe.printStackTrace();
+		}
 		
 		return returnCommand;
 	}

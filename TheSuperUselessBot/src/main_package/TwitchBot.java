@@ -35,17 +35,21 @@ public class TwitchBot extends PircBot  {
 	public String channelToJoin;
 	public ArrayList<String> listModo;
 	public ArrayList<Commande> listCommandes;
+	public Configuration config;
 
 	////////////////
 	// CONSTRUCTEUR
 	////////////////
 	
-	public TwitchBot(Configuration config) throws NickAlreadyInUseException, IOException, IrcException {
+	public TwitchBot() throws NickAlreadyInUseException, IOException, IrcException {
+		config = new Configuration();
+		//config.setupConfig("d:\\TRAVAIL\\Perso\\Jar_BOT\\config_bot.ini");
+		config.setupConfig("ressources/config_bot.ini");
 		this.channelToJoin = new String(config.getChannelToJoin());
 		CHIFFRERANDOM = false;
 		checkModo = true;
-		listModo=new ArrayList<String>();
-		listCommandes=config.setupCommands();
+		listModo = new ArrayList<String>();
+		listCommandes = config.setupCommands("ressources/command_list.json");
 		this.setName(config.getBotName());
 		this.isConnected();
 		this.setVerbose(true);
@@ -53,9 +57,11 @@ public class TwitchBot extends PircBot  {
 		this.joinChannel("#"+config.getChannelToJoin());
 		this.sendAction("#"+config.getChannelToJoin(), " vient de se connecter !");
 	}
+	
 	////////////
 	// METHODES
 	////////////
+	
 	@Override
 	protected void onConnect() {
 		
