@@ -9,15 +9,21 @@ public class Commande {
 	private String resultatCommande;
 	private boolean activated;
 	private boolean isRegExp;
+	private boolean isModOnly;
 	
-	public Commande(String nomCommande, String resultatCommande, boolean activated, boolean isRegExp) {
+	public Commande(String nomCommande, String resultatCommande, boolean activated, boolean isRegExp, boolean isModOnly) {
 		this.setNomCommande(nomCommande);
 		this.setResultatCommande(resultatCommande);
 		this.setActivated(activated);
 		this.setRegExp(isRegExp);
+		this.setModOnly(isModOnly);
 	}
 	
-	public String checkCommand(String channel, String sender, String login, String hostname, String message){
+	public String checkCommand(String channel, String sender, String login, String hostname, String message, boolean isSenderAMod){
+		
+		if(this.isModOnly() && !isSenderAMod){
+			return "";
+		}
 		
 		Pattern pattern;
 		Matcher m;
@@ -38,6 +44,13 @@ public class Commande {
 		return "";
 	}
 	
+	public boolean isModOnly() {
+		return isModOnly;
+	}
+
+	public void setModOnly(boolean isModOnly) {
+		this.isModOnly = isModOnly;
+	}
 
 	public String getNomCommande() {
 		return nomCommande;

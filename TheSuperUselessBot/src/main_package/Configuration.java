@@ -112,6 +112,7 @@ public class Configuration {
             	String resultat = tempoCommande.get("resultatCommande").toString();
             	boolean activated = Boolean.parseBoolean(tempoCommande.get("activated").toString());
             	boolean regexp = Boolean.parseBoolean(tempoCommande.get("isRegExp").toString());
+            	boolean modonly = Boolean.parseBoolean(tempoCommande.get("isModOnly").toString());
             	
 //            	if(nom == null){
 //            		System.out.println("ERREUR : nomCommande("+j+") == null dans e JSON");
@@ -126,7 +127,7 @@ public class Configuration {
 //            		System.out.println("ERREUR : nomCommande("+j+") == null dans e JSON");
 //            	}
             	
-            	Commande c = new Commande(nom, resultat, activated, regexp);
+            	Commande c = new Commande(nom, resultat, activated, regexp, modonly);
             	System.out.println(c.getNomCommande()+c.getResultatCommande()+c.isActivated()+c.isRegExp());
             	returnCommand.add(c);
             	
