@@ -22,6 +22,8 @@ public class CommandeTest {
 			listComm.add(new Commande("!command3.*", "resultCommand3", true, true, false));
 			listComm.add(new Commande("!command4", "resultCommand4 @sender", true, false, false));
 			listComm.add(new Commande("!command5.*", "resultCommand5 @sender", true, true, false));
+			listComm.add(new Commande("!command6", "resultCommand6", true, false, true));
+			listComm.add(new Commande("!command7", "resultCommand7", true, false, true));
 	}
 	
 	@Test
@@ -48,5 +50,15 @@ public class CommandeTest {
 	@Test
 	public void testCheckCommandAvailableAndRegExWithSender() {
 		assertTrue(listComm.get(4).checkCommand("", "Utilisateur", "", "", "!command5  TEST ET TESTTTTT", false).equals("resultCommand5 Utilisateur"));
+	}
+	
+	@Test
+	public void testCheckCommandAvailableAndNoRegExWithModOnlyAsMod() {
+		assertTrue(listComm.get(5).checkCommand("", "", "", "", "!command6", true).equals("resultCommand6"));
+	}
+	
+	@Test
+	public void testCheckCommandAvailableAndNoRegExWithModOnlyAsNotAMod() {
+		assertTrue(listComm.get(6).checkCommand("", "", "", "", "!command7", false).equals(""));
 	}
 }
