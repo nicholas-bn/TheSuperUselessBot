@@ -1,0 +1,17 @@
+{
+	"commands":	
+	[
+		{
+			"nomCommande":"frost c un peu un noob", "resultatCommande":"J'avoue @sender Kappa", "activated":"true", "isRegExp":"false", "isModOnly":"false"
+		},
+		{
+			"nomCommande":"!Dynoxyz", "resultatCommande":"Dynoxyz ? Celui qui arrive pas a defuse les !plant ? Kappa ", "activated":"true", "isRegExp":"false", "isModOnly":"false"
+		},
+		{
+			"nomCommande":".*ananas.*","resultatCommande":"NotLikeThis Comment oses-tu parler des Ananas @sender ?! NotLikeThis", "activated":"true", "isRegExp":"true", "isModOnly":"false"
+		},
+		{
+			"nomCommande":"!testMode","resultatCommande":"Tu es un mod GG", "activated":"true", "isRegExp":"false", "isModOnly":"true"
+		}
+	]
+}
