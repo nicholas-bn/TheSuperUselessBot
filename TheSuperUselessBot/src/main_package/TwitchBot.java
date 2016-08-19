@@ -260,5 +260,61 @@ public class TwitchBot extends PircBot  {
 		}
 		return false;
 	}
+
+	public boolean isCHIFFRERANDOM() {
+		return CHIFFRERANDOM;
+	}
+
+	public void setCHIFFRERANDOM(boolean cHIFFRERANDOM) {
+		CHIFFRERANDOM = cHIFFRERANDOM;
+	}
+
+	public boolean isCheckModo() {
+		return checkModo;
+	}
+
+	public void setCheckModo(boolean checkModo) {
+		this.checkModo = checkModo;
+	}
+
+	public int getChiffreCHIFFRERANDOM() {
+		return chiffreCHIFFRERANDOM;
+	}
+
+	public void setChiffreCHIFFRERANDOM(int chiffreCHIFFRERANDOM) {
+		this.chiffreCHIFFRERANDOM = chiffreCHIFFRERANDOM;
+	}
+
+	public String getChannelToJoin() {
+		return channelToJoin;
+	}
+
+	public void setChannelToJoin(String channelToJoin) {
+		this.channelToJoin = channelToJoin;
+	}
+
+	public ArrayList<String> getListModo() {
+		return listModo;
+	}
+
+	public void setListModo(ArrayList<String> listModo) {
+		this.listModo = listModo;
+	}
+
+	public ArrayList<Commande> getListCommandes() {
+		return listCommandes;
+	}
+
+	public void setListCommandes(ArrayList<Commande> listCommandes) {
+		this.listCommandes = listCommandes;
+	}
+
+	public Configuration getConfig() {
+		return config;
+	}
+
+	public void setConfig(Configuration config) {
+		this.config = config;
+	}
 	
 }
