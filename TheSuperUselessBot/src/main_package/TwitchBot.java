@@ -1,6 +1,7 @@
 package main_package;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -41,10 +42,17 @@ public class TwitchBot extends PircBot  {
 	// CONSTRUCTEUR
 	////////////////
 	
-	public TwitchBot() throws NickAlreadyInUseException, IOException, IrcException {
+	public TwitchBot(){
 		config = new Configuration();
 		//config.setupConfig("d:\\TRAVAIL\\Perso\\Jar_BOT\\config_bot.ini");
-		config.setupConfig("ressources/config_bot.ini");
+		
+		try {
+			config.setupConfig("ressources/config_bot.ini");
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		this.channelToJoin = new String(config.getChannelToJoin());
 		CHIFFRERANDOM = false;
 		checkModo = true;
@@ -53,7 +61,20 @@ public class TwitchBot extends PircBot  {
 		this.setName(config.getBotName());
 		this.isConnected();
 		this.setVerbose(true);
-		this.connect(config.getUrl(), config.getPort(), config.getoAuth());
+		
+		try {
+			this.connect(config.getUrl(), config.getPort(), config.getoAuth());
+		} catch (NickAlreadyInUseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IrcException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		this.joinChannel("#"+config.getChannelToJoin());
 		this.sendAction("#"+config.getChannelToJoin(), " vient de se connecter !");
 	}

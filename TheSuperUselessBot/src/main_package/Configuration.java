@@ -62,14 +62,14 @@ public class Configuration {
 		this.botName = botName;
 	}
 
-	public void setupConfig(String pathToINI){
+	public void setupConfig(String pathToINI) throws FileNotFoundException{
 		
 		File f = new File(pathToINI);
 		if(f.exists() && !f.isDirectory()) { 
 			System.out.println("Le fichier \"config_bot.ini\" a été trouvé.");
 		}
 		else {
-			System.err.println("Le fichier \"config_bot.ini\" n'a pas été trouvé.");
+			throw new FileNotFoundException("Le fichier \"config_bot.ini\" n'a pas été trouvé.");
 		}
 		
 		Wini ini;
@@ -111,21 +111,8 @@ public class Configuration {
             	boolean regexp = Boolean.parseBoolean(tempoCommande.get("isRegExp").toString());
             	boolean modonly = Boolean.parseBoolean(tempoCommande.get("isModOnly").toString());
             	
-//            	if(nom == null){
-//            		System.out.println("ERREUR : nomCommande("+j+") == null dans e JSON");
-//            	}
-//            	if(resultat == null){
-//            		System.out.println("ERREUR : nomCommande("+j+") == null dans e JSON");
-//            	}
-//            	if(activated == null){
-//            		System.out.println("ERREUR : nomCommande("+j+") == null dans e JSON");
-//            	}
-//            	if(regexp == null){
-//            		System.out.println("ERREUR : nomCommande("+j+") == null dans e JSON");
-//            	}
-            	
             	Commande c = new Commande(nom, resultat, activated, regexp, modonly);
-            	System.out.println(c.getNomCommande()+c.getResultatCommande()+c.isActivated()+c.isRegExp());
+            	System.out.println("Commande "+j+" ( NomCommande :\""+c.getNomCommande()+"\"; ResultatCommande :\""+c.getResultatCommande()+"\"; isActivated :\""+c.isActivated()+"\"; isRegExp :\""+c.isRegExp()+"\"; isModOnly :\""+c.isModOnly()+"\")");
             	returnCommand.add(c);
             	
             }
