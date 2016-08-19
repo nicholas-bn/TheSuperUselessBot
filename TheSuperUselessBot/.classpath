@@ -24,6 +24,7 @@
 	<classpathentry kind="lib" path="D:/TRAVAIL/Perso/java-json.jar/java-json.jar"/>
 	<classpathentry kind="lib" path="D:/TRAVAIL/Perso/json-simple.jar/json-simple.jar"/>
 	<classpathentry kind="lib" path="D:/TRAVAIL/Perso/Jar_BOT/ini4j-0.5.4-bin/ini4j-0.5.4/ini4j-0.5.4.jar"/>
+	<classpathentry kind="lib" path="D:/TRAVAIL/Perso/mockito-core-2.0.106-beta/mockito-core-2.0.106-beta.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
