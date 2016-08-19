@@ -57,7 +57,14 @@ public class TwitchBot extends PircBot  {
 		CHIFFRERANDOM = false;
 		checkModo = true;
 		listModo = new ArrayList<String>();
-		listCommandes = config.setupCommands("ressources/command_list.json");
+		
+		try {
+			listCommandes = config.setupCommands("ressources/command_list.json");
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		this.setName(config.getBotName());
 		this.isConnected();
 		this.setVerbose(true);

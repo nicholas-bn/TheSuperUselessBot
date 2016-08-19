@@ -91,7 +91,7 @@ public class Configuration {
 		}
 	}
 	
-	public ArrayList<Commande> setupCommands(String pathToJSON){
+	public ArrayList<Commande> setupCommands(String pathToJSON)throws FileNotFoundException{
 		
 		ArrayList<Commande> returnCommand = new ArrayList<Commande>();		
 		JSONParser parser = new JSONParser();
@@ -119,8 +119,9 @@ public class Configuration {
             
 
         } catch (FileNotFoundException fx) {
-        	System.err.println("Le fichier \"command_list.json\" n'a pas été trouvé.");
-            fx.printStackTrace();
+//        	System.err.println("Le fichier \"command_list.json\" n'a pas été trouvé.");
+//          fx.printStackTrace();
+        	throw new FileNotFoundException("Le fichier \"command_list.json\" n'a pas été trouvé.");
         } catch (IOException eio) {
 			// TODO Auto-generated catch block
 			eio.printStackTrace();

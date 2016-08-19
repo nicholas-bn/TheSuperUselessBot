@@ -3,6 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="ressources"/>
 	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="src" path="ressources_test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="lib" path="D:/TRAVAIL/Perso/pircbot-1.5.0/pircbot-1.5.0/pircbot.jar"/>
 	<classpathentry kind="lib" path="D:/TRAVAIL/Perso/commons-lang3-3.4-bin/commons-lang3-3.4/commons-lang3-3.4.jar"/>
