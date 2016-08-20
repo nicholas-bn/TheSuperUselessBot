@@ -37,6 +37,7 @@ public class TwitchBot extends PircBot  {
 	public ArrayList<String> listModo;
 	public ArrayList<Commande> listCommandes;
 	public Configuration config;
+	public String bufferMessage;
 
 	////////////////
 	// CONSTRUCTEUR
@@ -57,6 +58,7 @@ public class TwitchBot extends PircBot  {
 		CHIFFRERANDOM = false;
 		checkModo = true;
 		listModo = new ArrayList<String>();
+		this.setBufferMessage("");
 		
 		try {
 			listCommandes = config.setupCommands("ressources/command_list.json");
@@ -101,6 +103,9 @@ public class TwitchBot extends PircBot  {
 
 	public void onMessage(String channel, String sender, String login, String hostname, String message) {
 
+		// reset du bufferString
+		this.setBufferMessage("");
+		
 		// On vérifie dans la liste si le message envoyé correspond ou pas à un message dans le JSON.
 		for(Commande c : listCommandes){
 			String returnCheckCommand;
@@ -111,16 +116,15 @@ public class TwitchBot extends PircBot  {
 				returnCheckCommand = c.checkCommand(channel, sender, login, hostname, message, this.isMod(sender));
 			}
 			if (!returnCheckCommand.equals("")){
-				sendMessage(channel, returnCheckCommand);
+				sendMessage(channel, bufferMessage=returnCheckCommand);
 				return;
 			}
 		}
 		
-		System.out.println(message);
-		
-
+		// INFO
 		if (message.equalsIgnoreCase("info")) {
-			sendMessage(channel, listModo.toString());
+			sendMessage(channel, bufferMessage=listModo.toString());
+			System.out.println(bufferMessage);
 			return;
 		}
 	
@@ -133,7 +137,7 @@ public class TwitchBot extends PircBot  {
 					requestAPIStrawpoll(channel, sender, login, hostname, message);
 					return;
 				}else{
-					sendMessage(channel, "NotLikeThis Vous n'avez pas les droits pour creer un strawpoll NotLikeThis");
+					sendMessage(channel, bufferMessage="NotLikeThis Vous n'avez pas les droits pour creer un strawpoll NotLikeThis");
 					return;
 					
 				}
@@ -146,7 +150,7 @@ public class TwitchBot extends PircBot  {
 		
 		// DISCONNECT
 		if (message.equalsIgnoreCase("disconnect") && (sender.equalsIgnoreCase(channelToJoin) || sender.equalsIgnoreCase("thronghar"))) {
-			sendMessage(channel, "bye bb");
+			sendMessage(channel, bufferMessage="bye bb");
 			sendAction("#"+channelToJoin, " vient de se deconnecter ! ");
 			try {
 				Thread.sleep(2000);
@@ -160,8 +164,8 @@ public class TwitchBot extends PircBot  {
 		
 		// SUICIDE
 		if (message.equalsIgnoreCase("!suicide")) {
-			sendMessage(channel, "rip " + sender);
-			sendMessage(channel, ".timeout " + sender + " 10");
+			sendMessage(channel, bufferMessage="rip " + sender);
+			sendMessage(channel, bufferMessage=".timeout " + sender + " 10");
 			return;
 		}
 
@@ -232,7 +236,7 @@ public class TwitchBot extends PircBot  {
                 response.append(input).append("\n");
             }
         }
-        sendMessage(channel, "www.strawpoll.me/"+new JSONObject(response.toString()).getInt("id"));
+        sendMessage(channel, bufferMessage="www.strawpoll.me/"+new JSONObject(response.toString()).getInt("id"));
 	}
 	
 	public void onNotice(String sourceNick, String sourceLogin, String sourceHostname, String target, String notice){
@@ -259,6 +263,14 @@ public class TwitchBot extends PircBot  {
 				return true;
 		}
 		return false;
+	}
+
+	public String getBufferMessage() {
+		return bufferMessage;
+	}
+
+	public void setBufferMessage(String bufferMessage) {
+		this.bufferMessage = bufferMessage;
 	}
 
 	public boolean isCHIFFRERANDOM() {

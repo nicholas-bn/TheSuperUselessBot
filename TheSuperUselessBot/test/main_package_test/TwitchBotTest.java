@@ -8,6 +8,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import main_package.Commande;
 import main_package.TwitchBot;
 
 public class TwitchBotTest {
@@ -51,6 +52,32 @@ public class TwitchBotTest {
 		
 		t.setListModo(tempo);
 		assertFalse(t.isMod("user3"));
+	}
+
+	@Test
+	public void testOnMessageWhenCommandNotExisting() {
+		
+		t.onMessage("#thronghar", "userTest", "", "", "command inconnue");
+		assertTrue(t.getBufferMessage().equals(""));
+	}
+	
+	@Test
+	public void testOnMessageWhenCommandExistAndFromJSON() {
+		for(Commande tempo : t.getListCommandes()){
+			
+			t.onMessage("#thronghar", "userTest", "", "", tempo.getNomCommande());
+			System.out.println("Commande : "+tempo.getNomCommande()+" // Buffer : "+t.getBufferMessage() );
+			// Si commande désactivé OU modonly et user non mod
+			if(!tempo.isActivated() || (tempo.isModOnly() && !t.isMod("userTest"))) 
+				assertTrue(t.getBufferMessage().equals(""));
+			else {
+				// Replace lorsque une commande a le @sender pour remplacer par le pseudo dans la fonction checkCommand
+				if(tempo.getResultatCommande().contains("@sender"))
+					assertTrue(t.getBufferMessage().equals( tempo.getResultatCommande().replace("@sender", "userTest")));
+				else
+					assertTrue(t.getBufferMessage().equals( tempo.getResultatCommande()));
+			}
+		}
 	}
 	
 	@After
