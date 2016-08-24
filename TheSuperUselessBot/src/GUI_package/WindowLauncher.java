@@ -9,7 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class WindowLauncher  extends JFrame {
+public class WindowLauncher  extends JFrame { 
 
 	   public WindowLauncher() {
 		     super("titre de l'application");
