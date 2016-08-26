@@ -13,7 +13,11 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 
+import main_package.TwitchBot;
+
 public class WindowLauncher  extends JFrame { 
+	
+	TwitchBot tb;
 
 	public WindowLauncher() {
 		super("TheSuperUselessBot");
@@ -79,6 +83,8 @@ public class WindowLauncher  extends JFrame {
 		setContentPane(panneau);
 		setSize(200,100);
 		setVisible(true);
+		
+		tb = new TwitchBot();
 	}
 	
 	public static void main(String [] args){
