@@ -19,6 +19,8 @@ public class WindowLauncher  extends JFrame {
 		            System.exit(0);
 		         }
 		      };
+		      
+		      System.out.println("test");
 
 		      addWindowListener(l);
 
