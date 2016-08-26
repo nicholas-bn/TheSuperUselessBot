@@ -35,7 +35,6 @@ public class TwitchBot extends PircBot  {
 	public int chiffreCHIFFRERANDOM = 0;
 	public String channelToJoin;
 	public ArrayList<String> listModo;
-	public ArrayList<Commande> listCommandes;
 	public Configuration config;
 	public String bufferMessage;
 
@@ -43,29 +42,15 @@ public class TwitchBot extends PircBot  {
 	// CONSTRUCTEUR
 	////////////////
 	
-	public TwitchBot(){
-		config = new Configuration();
+	public TwitchBot(Configuration c){
+		config = c;
 		//config.setupConfig("d:\\TRAVAIL\\Perso\\Jar_BOT\\config_bot.ini");
-		
-		try {
-			config.setupConfig("ressources/config_bot.ini");
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 		
 		this.channelToJoin = new String(config.getChannelToJoin());
 		CHIFFRERANDOM = false;
 		checkModo = true;
 		listModo = new ArrayList<String>();
 		this.setBufferMessage("");
-		
-		try {
-			listCommandes = config.setupCommands("ressources/command_list.json");
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 		
 		this.setName(config.getBotName());
 		this.isConnected();
@@ -107,7 +92,7 @@ public class TwitchBot extends PircBot  {
 		this.setBufferMessage("");
 		
 		// On vérifie dans la liste si le message envoyé correspond ou pas à un message dans le JSON.
-		for(Commande c : listCommandes){
+		for(Commande c : config.getListCommandes()){
 			String returnCheckCommand;
 			if(!c.isModOnly()) {
 				returnCheckCommand = c.checkCommand(channel, sender, login, hostname, message, false);
@@ -315,14 +300,6 @@ public class TwitchBot extends PircBot  {
 
 	public void setListModo(ArrayList<String> listModo) {
 		this.listModo = listModo;
-	}
-
-	public ArrayList<Commande> getListCommandes() {
-		return listCommandes;
-	}
-
-	public void setListCommandes(ArrayList<Commande> listCommandes) {
-		this.listCommandes = listCommandes;
 	}
 
 	public Configuration getConfig() {

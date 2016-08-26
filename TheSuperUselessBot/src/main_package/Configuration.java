@@ -21,6 +21,7 @@ public class Configuration {
 	public String 	botName;
 	public int 		port;
 	public String 	url;
+	public ArrayList<Commande> listCommandes;
 
 	public String getoAuth() {
 		return oAuth;
@@ -28,6 +29,14 @@ public class Configuration {
 
 	public void setoAuth(String oAuth) {
 		this.oAuth = oAuth;
+	}
+
+	public ArrayList<Commande> getListCommandes() {
+		return listCommandes;
+	}
+
+	public void setListCommandes(ArrayList<Commande> listCommandes) {
+		this.listCommandes = listCommandes;
 	}
 
 	public int getPort() {
@@ -91,7 +100,7 @@ public class Configuration {
 		}
 	}
 	
-	public ArrayList<Commande> setupCommands(String pathToJSON)throws FileNotFoundException{
+	public void setupCommands(String pathToJSON)throws FileNotFoundException{
 		
 		ArrayList<Commande> returnCommand = new ArrayList<Commande>();		
 		JSONParser parser = new JSONParser();
@@ -130,7 +139,7 @@ public class Configuration {
 			pe.printStackTrace();
 		}
 		
-		return returnCommand;
+		this.setListCommandes(returnCommand);
 	}
 	
 }

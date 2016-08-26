@@ -5,6 +5,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.FileNotFoundException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -13,6 +14,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 
+import main_package.Configuration;
 import main_package.TwitchBot;
 
 public class WindowLauncher  extends JFrame { 
@@ -85,7 +87,23 @@ public class WindowLauncher  extends JFrame {
 		setSize(200,100);
 		setVisible(true);
 		
-		tb = new TwitchBot();
+		Configuration config = new Configuration();
+		
+		try {
+			config.setupConfig("ressources/config_bot.ini");
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		try {
+			config.setupCommands("ressources/command_list.json");
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		tb = new TwitchBot(config);
 	}
 	
 	public static void main(String [] args){
