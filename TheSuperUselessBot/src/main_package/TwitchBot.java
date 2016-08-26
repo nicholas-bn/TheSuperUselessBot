@@ -150,16 +150,7 @@ public class TwitchBot extends PircBot  {
 		
 		// DISCONNECT
 		if (message.equalsIgnoreCase("disconnect") && (sender.equalsIgnoreCase(channelToJoin) || sender.equalsIgnoreCase("thronghar"))) {
-			sendMessage(channel, bufferMessage="bye bb");
-			sendAction("#"+channelToJoin, " vient de se deconnecter ! ");
-			try {
-				Thread.sleep(2000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			this.disconnect();
-			System.exit(0);
+			deconnexion ();
 		}
 		
 		// SUICIDE
@@ -186,6 +177,19 @@ public class TwitchBot extends PircBot  {
 			}
 			return;
 		}
+	}
+	
+	public void deconnexion () {
+		sendMessage(this.getChannelToJoin(), bufferMessage="bye bb");
+		sendAction("#"+channelToJoin, " vient de se deconnecter ! ");
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.disconnect();
+		System.exit(0);
 	}
 	
 	

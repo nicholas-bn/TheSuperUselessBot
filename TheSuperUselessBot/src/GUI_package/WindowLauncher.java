@@ -24,6 +24,7 @@ public class WindowLauncher  extends JFrame {
 		
 		WindowListener l = new WindowAdapter() {
 			public void windowClosing(WindowEvent e){
+				tb.deconnexion();
 				System.exit(0);
 			}
 		};
