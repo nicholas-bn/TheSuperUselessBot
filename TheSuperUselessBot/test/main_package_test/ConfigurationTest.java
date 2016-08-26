@@ -1,25 +1,22 @@
 package main_package_test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import main_package.Commande;
 import main_package.Configuration;
 
 public class ConfigurationTest {
 	
 	Configuration c;
-	ArrayList<Commande> returnCommand;
 	
 	@Before
 	public void initialize() {
 			c = new Configuration();
-			returnCommand = new ArrayList<Commande>();
 	}
 
 	// CONFIG
@@ -87,34 +84,34 @@ public class ConfigurationTest {
 	public void testSetupCommandeFichierExisteEt() {
 
 	    try {
-			returnCommand = c.setupCommands("ressources_test/json_test_file.json");
+			c.setupCommands("ressources_test/json_test_file.json");
 		} catch (FileNotFoundException e) {
 			fail("Le test aurait du trouver le fichier");
 		}
 	    
-	    assertTrue(returnCommand.get(0).getNomCommande().equals("frost c un peu un noob"));
-	    assertTrue(returnCommand.get(0).getResultatCommande().equals("J'avoue @sender Kappa"));
-	    assertTrue(returnCommand.get(0).isActivated()==true);
-	    assertTrue(returnCommand.get(0).isRegExp()==false);
-	    assertTrue(returnCommand.get(0).isModOnly()==false);
+	    assertTrue(c.getListCommandes().get(0).getNomCommande().equals("frost c un peu un noob"));
+	    assertTrue(c.getListCommandes().get(0).getResultatCommande().equals("J'avoue @sender Kappa"));
+	    assertTrue(c.getListCommandes().get(0).isActivated()==true);
+	    assertTrue(c.getListCommandes().get(0).isRegExp()==false);
+	    assertTrue(c.getListCommandes().get(0).isModOnly()==false);
 	    
-	    assertTrue(returnCommand.get(1).getNomCommande().equals("!Dynoxyz"));
-	    assertTrue(returnCommand.get(1).getResultatCommande().equals("Dynoxyz ? Celui qui arrive pas a defuse les !plant ? Kappa "));
-	    assertTrue(returnCommand.get(1).isActivated()==true);
-	    assertTrue(returnCommand.get(1).isRegExp()==false);
-	    assertTrue(returnCommand.get(1).isModOnly()==false);
+	    assertTrue(c.getListCommandes().get(1).getNomCommande().equals("!Dynoxyz"));
+	    assertTrue(c.getListCommandes().get(1).getResultatCommande().equals("Dynoxyz ? Celui qui arrive pas a defuse les !plant ? Kappa "));
+	    assertTrue(c.getListCommandes().get(1).isActivated()==true);
+	    assertTrue(c.getListCommandes().get(1).isRegExp()==false);
+	    assertTrue(c.getListCommandes().get(1).isModOnly()==false);
 	    
-	    assertTrue(returnCommand.get(2).getNomCommande().equals(".*ananas.*"));
-	    assertTrue(returnCommand.get(2).getResultatCommande().equals("NotLikeThis Comment oses-tu parler des Ananas @sender ?! NotLikeThis"));
-	    assertTrue(returnCommand.get(2).isActivated()==true);
-	    assertTrue(returnCommand.get(2).isRegExp()==true);
-	    assertTrue(returnCommand.get(2).isModOnly()==false);
+	    assertTrue(c.getListCommandes().get(2).getNomCommande().equals(".*ananas.*"));
+	    assertTrue(c.getListCommandes().get(2).getResultatCommande().equals("NotLikeThis Comment oses-tu parler des Ananas @sender ?! NotLikeThis"));
+	    assertTrue(c.getListCommandes().get(2).isActivated()==true);
+	    assertTrue(c.getListCommandes().get(2).isRegExp()==true);
+	    assertTrue(c.getListCommandes().get(2).isModOnly()==false);
 	    
-	    assertTrue(returnCommand.get(3).getNomCommande().equals("!testMode"));
-	    assertTrue(returnCommand.get(3).getResultatCommande().equals("Tu es un mod GG"));
-	    assertTrue(returnCommand.get(3).isActivated()==true);
-	    assertTrue(returnCommand.get(3).isRegExp()==false);
-	    assertTrue(returnCommand.get(3).isModOnly()==true);
+	    assertTrue(c.getListCommandes().get(3).getNomCommande().equals("!testMode"));
+	    assertTrue(c.getListCommandes().get(3).getResultatCommande().equals("Tu es un mod GG"));
+	    assertTrue(c.getListCommandes().get(3).isActivated()==true);
+	    assertTrue(c.getListCommandes().get(3).isRegExp()==false);
+	    assertTrue(c.getListCommandes().get(3).isModOnly()==true);
 	    
 	}
 
