@@ -1,20 +1,17 @@
 package GUI_package;
 
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.io.FileNotFoundException;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 
-import main_package.Configuration;
 import main_package.TwitchBot;
 
 public class WindowLauncher  extends JFrame { 
@@ -26,7 +23,8 @@ public class WindowLauncher  extends JFrame {
 		
 		WindowListener l = new WindowAdapter() {
 			public void windowClosing(WindowEvent e){
-				tb.deconnexion();
+				if(tb!=null) // Si il n'a pas été instancié
+					tb.deconnexion();
 				System.exit(0);
 			}
 		};
@@ -36,74 +34,68 @@ public class WindowLauncher  extends JFrame {
 		JMenu jeuxMenu = new JMenu("Jeux");
 		JMenu outilsMenu = new JMenu("Outils");
 		
-		commandesMenu.addMouseListener(new MouseListener() {
-			
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				System.out.println("HUEHEUHEU");
-				
-			}
-		});
-		
 		menuBar.add(commandesMenu);
 		menuBar.add(jeuxMenu);
 		menuBar.add(outilsMenu);
 		this.setJMenuBar(menuBar);
-		  
-		System.out.println("test");
 		
-		addWindowListener(l);
+		this.addWindowListener(l);
 		
-		ImageIcon img = new ImageIcon("tips.gif");
-		JButton bouton = new JButton("Mon bouton",img);
+
 		
-		JPanel panneau = new JPanel();
-		panneau.add(bouton);
-		setContentPane(panneau);
-		setSize(200,100);
-		setVisible(true);
 		
-		Configuration config = new Configuration();
 		
-		try {
-			config.setupConfig("ressources/config_bot.ini");
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+//		JPanel panneauPrinc = new JPanel();
+//		panneauPrinc.setLayout(new BoxLayout(panneauPrinc, BoxLayout.Y_AXIS));
+//		
+//		JPanel panneau1 = new JPanel();
+//		panneau1.add(new JLabel("Test1"));
+//		panneau1.add(new JLabel("Test2"));
+//		JPanel panneau2 = new JPanel();
+//		panneau1.add(new JLabel("Test1"));
+//		panneau1.add(new JLabel("Test2"));
+//		
+//		panneauPrinc.add(panneau1);
+//		panneauPrinc.add(panneau2);
+//		
+//		this.setContentPane(panneauPrinc);
 		
-		try {
-			config.setupCommands("ressources/command_list.json");
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		JPanel parent = new JPanel();
+	    parent.setLayout(new BoxLayout(parent,BoxLayout.Y_AXIS));
+	    add(parent);
+
+	    JPanel Checks = new JPanel(); //set up panel
+	    JLabel CLabel = new JLabel("Label with text");
+	    Checks.setBackground(Color.red);
+	    parent.add(Checks);
+
+
+	   JPanel Transactions = new JPanel();
+	   Transactions.setToolTipText("Electronic Transactions");
+	   Transactions.setBackground(Color.blue);
+	   parent.add(Transactions);
 		
-		tb = new TwitchBot(config);
+		
+		this.setSize(400,600);
+		this.setVisible(true);
+		
+//		Configuration config = new Configuration();
+//		
+//		try {
+//			config.setupConfig("ressources/config_bot.ini");
+//		} catch (FileNotFoundException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//		
+//		try {
+//			config.setupCommands("ressources/command_list.json");
+//		} catch (FileNotFoundException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//		
+//		tb = new TwitchBot(config);
 	}
 	
 	public static void main(String [] args){
