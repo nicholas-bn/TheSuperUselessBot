@@ -64,19 +64,18 @@ public class WindowLauncher  extends JFrame {
 	    parent.setLayout(new BoxLayout(parent,BoxLayout.Y_AXIS));
 	    add(parent);
 
-	    JPanel Checks = new JPanel(); //set up panel
-	    JLabel CLabel = new JLabel("Label with text");
-	    Checks.setBackground(Color.red);
+	    Commande_JPanel Checks = new Commande_JPanel(); //set up panel
 	    parent.add(Checks);
-
-
-	   JPanel Transactions = new JPanel();
-	   Transactions.setToolTipText("Electronic Transactions");
-	   Transactions.setBackground(Color.blue);
-	   parent.add(Transactions);
 		
+	    Commande_JPanel er = new Commande_JPanel();
+	   	parent.add(er);
+	   	Commande_JPanel ze = new Commande_JPanel();
+	   	parent.add(ze);
+	   	Commande_JPanel rt = new Commande_JPanel();
+	   	parent.add(rt);
 		
-		this.setSize(400,600);
+		this.setSize(900,1000);
+		this.setLocation(1970, 50);
 		this.setVisible(true);
 		
 //		Configuration config = new Configuration();
