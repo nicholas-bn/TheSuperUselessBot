@@ -1,5 +1,6 @@
 package GUI_package;
 
+import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -24,9 +25,10 @@ public class Commande_JPanel extends JPanel {
 		activated = new JCheckBox();
 		modOnly = new JCheckBox();
 		isRegExp = new JCheckBox();
+	    //this.setLayout(new BoxLayout(this,BoxLayout.X_AXIS));
+		this.add(activated);
 		this.add(nomCommande);
 		this.add(resultatCommande);
-		this.add(activated);
 		this.add(modOnly);
 		this.add(isRegExp);
 		

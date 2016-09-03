@@ -1,10 +1,10 @@
 package GUI_package;
 
-import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -61,12 +61,19 @@ public class WindowLauncher  extends JFrame {
 //		this.setContentPane(panneauPrinc);
 		
 		JPanel parent = new JPanel();
-	    parent.setLayout(new BoxLayout(parent,BoxLayout.Y_AXIS));
-	    add(parent);
+	    parent.setLayout(new BoxLayout(parent,BoxLayout.PAGE_AXIS));
+	    this.add(parent);
+	    
+	    JPanel legende = new JPanel();
+	    legende.add(new JLabel("Activated"));
+	    legende.add(new JLabel("Nom de la commande"));
+	    legende.add(new JLabel("Résultat de la commande"));
+	    legende.add(new JLabel("isModOnly"));
+	    legende.add(new JLabel("isRegExp"));
+	    parent.add(legende);
 
 	    Commande_JPanel Checks = new Commande_JPanel(); //set up panel
 	    parent.add(Checks);
-		
 	    Commande_JPanel er = new Commande_JPanel();
 	   	parent.add(er);
 	   	Commande_JPanel ze = new Commande_JPanel();
@@ -74,6 +81,8 @@ public class WindowLauncher  extends JFrame {
 	   	Commande_JPanel rt = new Commande_JPanel();
 	   	parent.add(rt);
 		
+	   	//Thread.currentThread().getId()
+	   	
 		this.setSize(900,1000);
 		this.setLocation(1970, 50);
 		this.setVisible(true);
