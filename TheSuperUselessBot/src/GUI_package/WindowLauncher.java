@@ -3,8 +3,8 @@ package GUI_package;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.FileNotFoundException;
 
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -12,6 +12,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 
+import main_package.Configuration;
 import main_package.TwitchBot;
 
 public class WindowLauncher  extends JFrame { 
@@ -87,23 +88,27 @@ public class WindowLauncher  extends JFrame {
 		this.setLocation(1970, 50);
 		this.setVisible(true);
 		
-//		Configuration config = new Configuration();
-//		
-//		try {
-//			config.setupConfig("ressources/config_bot.ini");
-//		} catch (FileNotFoundException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
-//		
-//		try {
-//			config.setupCommands("ressources/command_list.json");
-//		} catch (FileNotFoundException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
-//		
-//		tb = new TwitchBot(config);
+		Configuration config = new Configuration();
+		
+		try {
+			config.setupConfig("ressources/config_bot.ini");
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		try {
+			config.setupCommands("ressources/command_list.json");
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+
+		System.out.println("THREAD window: "+Thread.currentThread().getId());
+		tb = new TwitchBot(config);
+		Thread t = new Thread(tb);
+		t.start();
 	}
 	
 	public static void main(String [] args){

@@ -22,7 +22,7 @@ import org.jibble.pircbot.PircBot;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class TwitchBot extends PircBot  {
+public class TwitchBot extends PircBot implements Runnable {
 	
 	
 	
@@ -44,8 +44,17 @@ public class TwitchBot extends PircBot  {
 	
 	public TwitchBot(Configuration c){
 		config = c;
+	}
+	
+	////////////
+	// METHODES
+	////////////
+	
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
 		//config.setupConfig("d:\\TRAVAIL\\Perso\\Jar_BOT\\config_bot.ini");
-		
+		System.out.println("THREAD TWITCH BOT: "+Thread.currentThread().getId());
 		this.channelToJoin = new String(config.getChannelToJoin());
 		CHIFFRERANDOM = false;
 		checkModo = true;
@@ -73,9 +82,6 @@ public class TwitchBot extends PircBot  {
 		this.sendAction("#"+config.getChannelToJoin(), " vient de se connecter !");
 	}
 	
-	////////////
-	// METHODES
-	////////////
 	
 	@Override
 	protected void onConnect() {
@@ -165,7 +171,7 @@ public class TwitchBot extends PircBot  {
 	}
 	
 	public void deconnexion () {
-		sendMessage(this.getChannelToJoin(), bufferMessage="bye bb");
+		sendMessage("#"+this.getChannelToJoin(), bufferMessage="bye bb");
 		sendAction("#"+channelToJoin, " vient de se deconnecter ! ");
 		try {
 			Thread.sleep(2000);
@@ -309,5 +315,6 @@ public class TwitchBot extends PircBot  {
 	public void setConfig(Configuration config) {
 		this.config = config;
 	}
-	
+
+
 }
