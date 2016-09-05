@@ -18,13 +18,13 @@ public class Commande_JPanel extends JPanel {
 	
 	
 
-	public Commande_JPanel() {
+	public Commande_JPanel(Commande c) {
 		super();
-		nomCommande = new JTextArea(1, 15);
-		resultatCommande = new JTextArea(1, 35);
-		activated = new JCheckBox();
-		modOnly = new JCheckBox();
-		isRegExp = new JCheckBox();
+		nomCommande = new JTextArea(c.getNomCommande(), 1, 10);
+		resultatCommande = new JTextArea(c.getResultatCommande(), 1, 50);
+		activated = new JCheckBox("Actif", c.isActivated());
+		modOnly = new JCheckBox("modOnly", c.isModOnly());
+		isRegExp = new JCheckBox("isRegExp", c.isRegExp());
 	    //this.setLayout(new BoxLayout(this,BoxLayout.X_AXIS));
 		this.add(activated);
 		this.add(nomCommande);

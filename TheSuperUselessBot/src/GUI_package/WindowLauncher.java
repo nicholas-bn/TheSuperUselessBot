@@ -1,10 +1,10 @@
 package GUI_package;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.FileNotFoundException;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
@@ -13,6 +13,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 
+import main_package.Commande;
+import main_package.Configuration;
 import main_package.TwitchBot;
 
 public class WindowLauncher  extends JFrame { 
@@ -61,26 +63,30 @@ public class WindowLauncher  extends JFrame {
 //		
 //		this.setContentPane(panneauPrinc);
 		
+		Configuration config = new Configuration();
+		
+		try {
+			config.setupConfig("ressources/config_bot.ini");
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		try {
+			config.setupCommands("ressources/command_list.json");
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
+		
 		JPanel parent = new JPanel();
 	    parent.setLayout(new BoxLayout(parent,BoxLayout.PAGE_AXIS));
 	    
-	    JPanel legende = new JPanel();
-	    legende.add(new JLabel("Activated"));
-	    legende.add(new JLabel("Nom de la commande"));
-	    legende.add(new JLabel("Résultat de la commande"));
-	    legende.add(new JLabel("isModOnly"));
-	    legende.add(new JLabel("isRegExp"));
-	    parent.add(legende);
-
-	    Commande_JPanel Checks = new Commande_JPanel(); //set up panel
-	    //Checks.setLayout(new BorderLayout());
-	    parent.add(Checks);
-	    Commande_JPanel er = new Commande_JPanel();
-	   	parent.add(er);
-	   	Commande_JPanel ze = new Commande_JPanel();
-	   	parent.add(ze);
-	   	Commande_JPanel rt = new Commande_JPanel();
-	   	parent.add(rt);
+	    for(Commande c : config.getListCommandes()){
+	    	parent.add(new Commande_JPanel(c));
+	    }
 	   	
 	   	// Ce JPanel permet d'éviter l'espacement entre les Commande_JPanel 
 	   	JPanel mainPanel = new JPanel(new BorderLayout());
@@ -88,25 +94,11 @@ public class WindowLauncher  extends JFrame {
 		
 		this.add(mainPanel);  
 			   	
-		this.setSize(900,1000);
-		this.setLocation(1970, 50);
+		this.setSize(960,1080);
+		this.setLocation(1920, 0);
 		this.setVisible(true);
 		
-//		Configuration config = new Configuration();
-//		
-//		try {
-//			config.setupConfig("ressources/config_bot.ini");
-//		} catch (FileNotFoundException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
-//		
-//		try {
-//			config.setupCommands("ressources/command_list.json");
-//		} catch (FileNotFoundException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
+
 //		
 //
 //		System.out.println("THREAD window: "+Thread.currentThread().getId());
