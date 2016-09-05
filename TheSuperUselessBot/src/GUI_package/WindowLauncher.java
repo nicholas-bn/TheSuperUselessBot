@@ -1,9 +1,10 @@
 package GUI_package;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.io.FileNotFoundException;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
@@ -12,7 +13,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 
-import main_package.Configuration;
 import main_package.TwitchBot;
 
 public class WindowLauncher  extends JFrame { 
@@ -63,7 +63,6 @@ public class WindowLauncher  extends JFrame {
 		
 		JPanel parent = new JPanel();
 	    parent.setLayout(new BoxLayout(parent,BoxLayout.PAGE_AXIS));
-	    this.add(parent);
 	    
 	    JPanel legende = new JPanel();
 	    legende.add(new JLabel("Activated"));
@@ -74,6 +73,7 @@ public class WindowLauncher  extends JFrame {
 	    parent.add(legende);
 
 	    Commande_JPanel Checks = new Commande_JPanel(); //set up panel
+	    //Checks.setLayout(new BorderLayout());
 	    parent.add(Checks);
 	    Commande_JPanel er = new Commande_JPanel();
 	   	parent.add(er);
@@ -81,34 +81,38 @@ public class WindowLauncher  extends JFrame {
 	   	parent.add(ze);
 	   	Commande_JPanel rt = new Commande_JPanel();
 	   	parent.add(rt);
-		
-	   	//Thread.currentThread().getId()
 	   	
+	   	// Ce JPanel permet d'éviter l'espacement entre les Commande_JPanel 
+	   	JPanel mainPanel = new JPanel(new BorderLayout());
+		mainPanel.add(parent, BorderLayout.PAGE_START);
+		
+		this.add(mainPanel);  
+			   	
 		this.setSize(900,1000);
 		this.setLocation(1970, 50);
 		this.setVisible(true);
 		
-		Configuration config = new Configuration();
-		
-		try {
-			config.setupConfig("ressources/config_bot.ini");
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-		try {
-			config.setupCommands("ressources/command_list.json");
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-
-		System.out.println("THREAD window: "+Thread.currentThread().getId());
-		tb = new TwitchBot(config);
-		Thread t = new Thread(tb);
-		t.start();
+//		Configuration config = new Configuration();
+//		
+//		try {
+//			config.setupConfig("ressources/config_bot.ini");
+//		} catch (FileNotFoundException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//		
+//		try {
+//			config.setupCommands("ressources/command_list.json");
+//		} catch (FileNotFoundException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//		
+//
+//		System.out.println("THREAD window: "+Thread.currentThread().getId());
+//		tb = new TwitchBot(config);
+//		Thread t = new Thread(tb);
+//		t.start();
 	}
 	
 	public static void main(String [] args){

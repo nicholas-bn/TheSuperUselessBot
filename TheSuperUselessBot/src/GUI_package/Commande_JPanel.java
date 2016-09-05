@@ -21,7 +21,7 @@ public class Commande_JPanel extends JPanel {
 	public Commande_JPanel() {
 		super();
 		nomCommande = new JTextArea(1, 15);
-		resultatCommande = new JTextArea(1, 50);
+		resultatCommande = new JTextArea(1, 35);
 		activated = new JCheckBox();
 		modOnly = new JCheckBox();
 		isRegExp = new JCheckBox();
