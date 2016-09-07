@@ -1,19 +1,13 @@
 package GUI_package;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
-import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.text.Document;
 
 import main_package.Commande;
 
@@ -25,11 +19,13 @@ public class Commande_JPanel extends JPanel {
 	private JCheckBox modOnly;
 	private JCheckBox isRegExp;
 	private Commande commande;
+	private WindowLauncher anchor;
 	
 	
 
-	public Commande_JPanel(Commande c) {
+	public Commande_JPanel(Commande c, WindowLauncher anchor) {
 		super();
+		this.setAnchor(anchor);
 		nomCommande = new JTextArea(c.getNomCommande(), 1, 10);
 		resultatCommande = new JTextArea(c.getResultatCommande(), 1, 50);
 		activated = new JCheckBox("Actif", c.isActivated());
@@ -61,6 +57,7 @@ public class Commande_JPanel extends JPanel {
 					commande.setActivated(false);
 				}
 				System.out.println(Commande_JPanel.this.getCommande().toString());
+				anchor.updateListCommand();
 			}
 		});
 		
@@ -76,6 +73,7 @@ public class Commande_JPanel extends JPanel {
 					commande.setModOnly(false);
 				}
 				System.out.println(Commande_JPanel.this.getCommande().toString());
+				anchor.updateListCommand();
 			}
 		});
 		
@@ -121,7 +119,8 @@ public class Commande_JPanel extends JPanel {
 			
 			private void textChanged(DocumentEvent e) {
 				commande.setNomCommande(nomCommande.getText());
-				System.out.println(Commande_JPanel.this.getCommande().toString());				
+				System.out.println(Commande_JPanel.this.getCommande().toString());
+				anchor.updateListCommand();				
 			}
 			
 		};
@@ -154,7 +153,8 @@ public class Commande_JPanel extends JPanel {
 			
 			private void textChanged(DocumentEvent e) {
 				commande.setResultatCommande(resultatCommande.getText());
-				System.out.println(Commande_JPanel.this.getCommande().toString());				
+				System.out.println(Commande_JPanel.this.getCommande().toString());
+				anchor.updateListCommand();				
 			}
 			
 		};
@@ -162,11 +162,9 @@ public class Commande_JPanel extends JPanel {
 	}
 
 
-
 	public JTextArea getNomCommande() {
 		return nomCommande;
 	}
-
 
 
 	public void setNomCommande(JTextArea nomCommande) {
@@ -174,11 +172,9 @@ public class Commande_JPanel extends JPanel {
 	}
 
 
-
 	public JTextArea getResultatCommande() {
 		return resultatCommande;
 	}
-
 
 
 	public void setResultatCommande(JTextArea resultatCommande) {
@@ -186,11 +182,9 @@ public class Commande_JPanel extends JPanel {
 	}
 
 
-
 	public JCheckBox getActivated() {
 		return activated;
 	}
-
 
 
 	public void setActivated(JCheckBox activated) {
@@ -198,11 +192,9 @@ public class Commande_JPanel extends JPanel {
 	}
 
 
-
 	public JCheckBox getModOnly() {
 		return modOnly;
 	}
-
 
 
 	public void setModOnly(JCheckBox modOnly) {
@@ -210,11 +202,9 @@ public class Commande_JPanel extends JPanel {
 	}
 
 
-
 	public JCheckBox getIsRegExp() {
 		return isRegExp;
 	}
-
 
 
 	public void setIsRegExp(JCheckBox isRegExp) {
@@ -222,15 +212,23 @@ public class Commande_JPanel extends JPanel {
 	}
 
 
-
 	public Commande getCommande() {
 		return commande;
 	}
 
 
-
 	public void setCommande(Commande commande) {
 		this.commande = commande;
+	}
+
+	
+	public WindowLauncher getAnchor() {
+		return anchor;
+	}
+
+	
+	public void setAnchor(WindowLauncher anchor) {
+		this.anchor = anchor;
 	}
 
 	

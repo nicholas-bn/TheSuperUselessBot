@@ -5,6 +5,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
@@ -21,9 +22,11 @@ public class WindowLauncher  extends JFrame {
 	
 	TwitchBot tb;
 	Configuration config;
+	ArrayList<Commande_JPanel> listPanelCommande;
 
 	public WindowLauncher() {
 		super("TheSuperUselessBot");
+		listPanelCommande = new ArrayList<Commande_JPanel>();
 		
 		WindowListener l = new WindowAdapter() {
 			public void windowClosing(WindowEvent e){
@@ -41,10 +44,13 @@ public class WindowLauncher  extends JFrame {
 		JPanel parent = new JPanel();
 	    parent.setLayout(new BoxLayout(parent,BoxLayout.PAGE_AXIS));
 	    
+	    // Permet d'avoir une list des JPanel pour pouvoir les remttre en list de Commande à donner au bot
 	    for(Commande c : config.getListCommandes()){
-	    	parent.add(new Commande_JPanel(c));
+	    	listPanelCommande.add(new Commande_JPanel(c, this));
 	    }
-	   	
+	    for(Commande_JPanel cjp : listPanelCommande){
+	    	parent.add(cjp);
+	    }
 	   	// Ce JPanel permet d'éviter l'espacement entre les Commande_JPanel 
 	   	JPanel mainPanel = new JPanel(new BorderLayout());
 		mainPanel.add(parent, BorderLayout.PAGE_START);
@@ -58,10 +64,22 @@ public class WindowLauncher  extends JFrame {
 
 		
 
-//		System.out.println("THREAD window: "+Thread.currentThread().getId());
-//		tb = new TwitchBot(config);
-//		Thread t = new Thread(tb);
-//		t.start();
+		System.out.println("THREAD window: "+Thread.currentThread().getId());
+		tb = new TwitchBot(config);
+		Thread t = new Thread(tb);
+		t.start();
+//		ArrayList<Commande> tempo = tb.config.getListCommandes();
+//		tempo.add(new Commande("!test1", "RESULTAT", true, false, false));
+//		tb.config.setListCommandes(tempo);
+		
+	}
+	
+	public void updateListCommand(){
+		ArrayList<Commande> tempo = new ArrayList<Commande>();
+		for (Commande_JPanel c : listPanelCommande){
+			tempo.add(c.getCommande());
+		}
+		tb.config.setListCommandes(tempo);
 	}
 	
 	public void loadConfig(){
