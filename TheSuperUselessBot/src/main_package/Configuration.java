@@ -121,7 +121,7 @@ public class Configuration {
             	boolean modonly = Boolean.parseBoolean(tempoCommande.get("isModOnly").toString());
             	
             	Commande c = new Commande(nom, resultat, activated, regexp, modonly);
-            	System.out.println("Commande "+j+" ( NomCommande :\""+c.getNomCommande()+"\"; ResultatCommande :\""+c.getResultatCommande()+"\"; isActivated :\""+c.isActivated()+"\"; isRegExp :\""+c.isRegExp()+"\"; isModOnly :\""+c.isModOnly()+"\")");
+            	System.out.println("Commande "+j+"( "+c.toString()+" )");
             	returnCommand.add(c);
             	
             }

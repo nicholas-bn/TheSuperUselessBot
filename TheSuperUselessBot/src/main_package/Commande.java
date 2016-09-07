@@ -84,5 +84,8 @@ public class Commande {
 		this.isRegExp = isRegExp;
 	}
 
+	public String toString(){
+		return  "NomCommande :\""+this.getNomCommande()+"\"; ResultatCommande :\""+this.getResultatCommande()+"\"; isActivated :\""+this.isActivated()+"\"; isRegExp :\""+this.isRegExp()+"\"; isModOnly :\""+this.isModOnly()+"\"";
+	}
 	
 }

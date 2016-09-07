@@ -20,6 +20,7 @@ import main_package.TwitchBot;
 public class WindowLauncher  extends JFrame { 
 	
 	TwitchBot tb;
+	Configuration config;
 
 	public WindowLauncher() {
 		super("TheSuperUselessBot");
@@ -32,55 +33,11 @@ public class WindowLauncher  extends JFrame {
 			}
 		};
 		
-		JMenuBar menuBar = new JMenuBar();
-		JMenu commandesMenu = new JMenu("Commandes");
-		JMenu jeuxMenu = new JMenu("Jeux");
-		JMenu outilsMenu = new JMenu("Outils");
-		
-		menuBar.add(commandesMenu);
-		menuBar.add(jeuxMenu);
-		menuBar.add(outilsMenu);
-		this.setJMenuBar(menuBar);
-		
 		this.addWindowListener(l);
 		
+		remplirMenu();
+		loadConfig();
 
-		
-		
-		
-//		JPanel panneauPrinc = new JPanel();
-//		panneauPrinc.setLayout(new BoxLayout(panneauPrinc, BoxLayout.Y_AXIS));
-//		
-//		JPanel panneau1 = new JPanel();
-//		panneau1.add(new JLabel("Test1"));
-//		panneau1.add(new JLabel("Test2"));
-//		JPanel panneau2 = new JPanel();
-//		panneau1.add(new JLabel("Test1"));
-//		panneau1.add(new JLabel("Test2"));
-//		
-//		panneauPrinc.add(panneau1);
-//		panneauPrinc.add(panneau2);
-//		
-//		this.setContentPane(panneauPrinc);
-		
-		Configuration config = new Configuration();
-		
-		try {
-			config.setupConfig("ressources/config_bot.ini");
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-		try {
-			config.setupCommands("ressources/command_list.json");
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-		
-		
 		JPanel parent = new JPanel();
 	    parent.setLayout(new BoxLayout(parent,BoxLayout.PAGE_AXIS));
 	    
@@ -99,12 +56,42 @@ public class WindowLauncher  extends JFrame {
 		this.setVisible(true);
 		
 
-//		
-//
+		
+
 //		System.out.println("THREAD window: "+Thread.currentThread().getId());
 //		tb = new TwitchBot(config);
 //		Thread t = new Thread(tb);
 //		t.start();
+	}
+	
+	public void loadConfig(){
+		this.config = new Configuration();
+		
+		try {
+			this.config.setupConfig("ressources/config_bot.ini");
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		try {
+			this.config.setupCommands("ressources/command_list.json");
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+	
+	public void remplirMenu(){
+		JMenuBar menuBar = new JMenuBar();
+		JMenu commandesMenu = new JMenu("Commandes");
+		JMenu jeuxMenu = new JMenu("Jeux");
+		JMenu outilsMenu = new JMenu("Outils");
+		
+		menuBar.add(commandesMenu);
+		menuBar.add(jeuxMenu);
+		menuBar.add(outilsMenu);
+		this.setJMenuBar(menuBar);
 	}
 	
 	public static void main(String [] args){
