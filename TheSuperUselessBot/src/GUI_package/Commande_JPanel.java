@@ -37,22 +37,23 @@ public class Commande_JPanel extends JPanel {
 		super();
 		this.setAnchor(anchor);
 		nomCommande = new JTextArea(c.getNomCommande(), 1, 10);
+		nomCommande.setToolTipText("Commande");
 		resultatCommande = new JTextArea(c.getResultatCommande(), 1, 50);
+		resultatCommande.setToolTipText("Résultat de la commande");
 		activated = new JCheckBox("Actif", c.isActivated());
+		activated.setToolTipText("Activer la commande");
 		modOnly = new JCheckBox("modOnly", c.isModOnly());
+		modOnly.setToolTipText("Commande utilisable uniquement pour les mods");
 		isRegExp = new JCheckBox("isRegExp", c.isRegExp());
-//		BufferedImage buttonIcon;
-//		try {
-//			buttonIcon = ImageIO.read(new File("ressources/images/Bouton_Fermeture.png"));
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		isRegExp.setToolTipText("Utilise les expressions régulieres pour la commande");
+
+
 		supprimer = new JButton(new ImageIcon("ressources/images/Bouton_Fermeture.png"));
 		supprimer.setBorder(BorderFactory.createEmptyBorder());
 		supprimer.setContentAreaFilled(false);
+		supprimer.setToolTipText("Supprimer la commande");
+		
 		commande = c;
-	    //this.setLayout(new BoxLayout(this,BoxLayout.X_AXIS));
 		
 		this.addListeners();
 		
