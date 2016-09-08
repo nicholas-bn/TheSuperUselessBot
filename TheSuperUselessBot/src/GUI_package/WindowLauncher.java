@@ -23,6 +23,7 @@ public class WindowLauncher  extends JFrame {
 	TwitchBot tb;
 	Configuration config;
 	ArrayList<Commande_JPanel> listPanelCommande;
+	JPanel parent;
 
 	public WindowLauncher() {
 		super("TheSuperUselessBot");
@@ -41,7 +42,7 @@ public class WindowLauncher  extends JFrame {
 		remplirMenu();
 		loadConfig();
 
-		JPanel parent = new JPanel();
+		parent = new JPanel();
 	    parent.setLayout(new BoxLayout(parent,BoxLayout.PAGE_AXIS));
 	    
 	    // Permet d'avoir une list des JPanel pour pouvoir les remttre en list de Commande à donner au bot
@@ -57,7 +58,8 @@ public class WindowLauncher  extends JFrame {
 		
 		this.add(mainPanel);  
 			   	
-		this.setSize(960,1080);
+		//this.setSize(960,1080);
+		this.setSize(1060,1080);
 		this.setLocation(1920, 0);
 		this.setVisible(true);
 		
@@ -68,9 +70,8 @@ public class WindowLauncher  extends JFrame {
 		tb = new TwitchBot(config);
 		Thread t = new Thread(tb);
 		t.start();
-//		ArrayList<Commande> tempo = tb.config.getListCommandes();
-//		tempo.add(new Commande("!test1", "RESULTAT", true, false, false));
-//		tb.config.setListCommandes(tempo);
+		
+
 		
 	}
 	
