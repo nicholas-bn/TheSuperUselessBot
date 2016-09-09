@@ -98,10 +98,10 @@ public class WindowLauncher  extends JFrame {
 		// UTILISER CA POUR SWAP ENTRE COMMANDE OUTILS MENUS
 		//mainPanel.setVisible(false);
 
-//		System.out.println("THREAD window: "+Thread.currentThread().getId());
-//		tb = new TwitchBot(config);
-//		Thread t = new Thread(tb);
-//		t.start();
+		System.out.println("THREAD window: "+Thread.currentThread().getId());
+		tb = new TwitchBot(config);
+		Thread t = new Thread(tb);
+		t.start();
 		
 
 		
