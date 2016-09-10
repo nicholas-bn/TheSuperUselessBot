@@ -1,5 +1,7 @@
 package main_package;
 
+import java.awt.Dimension;
+import java.awt.Point;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -22,6 +24,8 @@ public class Configuration {
 	public int 		port;
 	public String 	url;
 	public ArrayList<Commande> listCommandes;
+	Point positionFrame;
+	Dimension sizeFrame;
 
 	public String getoAuth() {
 		return oAuth;
@@ -71,6 +75,22 @@ public class Configuration {
 		this.botName = botName;
 	}
 
+	public Point getPositionFrame() {
+		return positionFrame;
+	}
+
+	public void setPositionFrame(Point positionFrame) {
+		this.positionFrame = positionFrame;
+	}
+
+	public Dimension getSizeFrame() {
+		return sizeFrame;
+	}
+
+	public void setSizeFrame(Dimension sizeFrame) {
+		this.sizeFrame = sizeFrame;
+	}
+
 	public void setupConfig(String pathToINI) throws FileNotFoundException{
 		
 		File f = new File(pathToINI);
@@ -89,6 +109,10 @@ public class Configuration {
 			this.setoAuth(ini.get("config", "oauth"));
 			this.setPort(ini.get("config", "port", int.class));
 			this.setUrl(ini.get("config", "url"));
+			
+			this.setPositionFrame(new Point(ini.get("preferences", "positionX", int.class), ini.get("preferences", "positionY", int.class)));
+			this.setSizeFrame(new Dimension(ini.get("preferences", "sizeX", int.class), ini.get("preferences", "sizeY", int.class)));
+			
 		} catch (InvalidFileFormatException e) {
 			// TODO Auto-generated catch block
 			System.err.println("InvalidFileFormatException");

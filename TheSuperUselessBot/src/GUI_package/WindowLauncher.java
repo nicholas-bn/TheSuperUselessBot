@@ -90,8 +90,10 @@ public class WindowLauncher  extends JFrame {
 			  
 		
 		//this.setSize(960,1080);
-		this.setSize(1060,1080);
-		this.setLocation(1920, 0);
+//		this.setSize(1060,1080);
+//		this.setLocation(1920, 0);
+		this.setSize(config.getSizeFrame().width,config.getSizeFrame().height);
+		this.setLocation(config.getPositionFrame().x, config.getPositionFrame().y);
 		this.setVisible(true);
 		
 
