@@ -6,7 +6,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
@@ -16,6 +18,9 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+
+import org.ini4j.InvalidFileFormatException;
+import org.ini4j.Wini;
 
 import main_package.Commande;
 import main_package.Configuration;
@@ -34,6 +39,8 @@ public class WindowLauncher  extends JFrame {
 		
 		WindowListener l = new WindowAdapter() {
 			public void windowClosing(WindowEvent e){
+				WindowLauncher.this.savePreferences();
+				WindowLauncher.this.setVisible(false);
 				if(tb!=null) // Si il n'a pas été instancié
 					tb.deconnexion();
 				System.exit(0);
@@ -109,6 +116,27 @@ public class WindowLauncher  extends JFrame {
 		
 	}
 	
+	protected void savePreferences() {
+		// TODO Auto-generated method stub
+		Wini ini;
+		try {
+			ini = new Wini(new File("ressources/config_bot.ini"));
+			ini.put("preferences", "positionX", (int) this.getLocation().getX());
+			ini.put("preferences", "positionY", (int)this.getLocation().getY());
+			ini.put("preferences", "sizeX", (int)this.getSize().getWidth());
+			ini.put("preferences", "sizeY", (int)this.getSize().getHeight());
+			ini.store();
+		} catch (InvalidFileFormatException e) {
+			// TODO Auto-generated catch block
+			System.err.println("InvalidFileFormatException");
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.err.println("IOException");
+			e.printStackTrace();
+		}
+	}
+
 	public void updateListCommand(){
 		ArrayList<Commande> tempo = new ArrayList<Commande>();
 		for (Commande_JPanel c : listPanelCommande){
