@@ -129,6 +129,7 @@ public class WindowLauncher  extends JFrame {
 		
 	}
 	
+	@SuppressWarnings("unchecked")
 	protected void saveCommands() {
 		// TODO Auto-generated method stub
 		
