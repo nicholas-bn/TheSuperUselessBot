@@ -8,6 +8,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -15,12 +16,14 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import org.ini4j.InvalidFileFormatException;
 import org.ini4j.Wini;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import main_package.Commande;
 import main_package.Configuration;
@@ -32,6 +35,10 @@ public class WindowLauncher  extends JFrame {
 	Configuration config;
 	ArrayList<Commande_JPanel> listPanelCommande;
 	JPanel parent;
+	JPanel commandePanel;
+	JPanel testPanel;
+	public final String PATH_TO_INI = "ressources/config_bot.ini";
+	public final String PATH_TO_JSON = "ressources/command_list.json";
 
 	public WindowLauncher() {
 		super("TheSuperUselessBot");
@@ -41,6 +48,7 @@ public class WindowLauncher  extends JFrame {
 			public void windowClosing(WindowEvent e){
 				WindowLauncher.this.savePreferences();
 				WindowLauncher.this.setVisible(false);
+				WindowLauncher.this.saveCommands();
 				if(tb!=null) // Si il n'a pas été instancié
 					tb.deconnexion();
 				System.exit(0);
@@ -69,8 +77,8 @@ public class WindowLauncher  extends JFrame {
 	    
 	    
 	   	// Ce JPanel permet d'éviter l'espacement entre les Commande_JPanel 
-	   	JPanel mainPanel = new JPanel(new BorderLayout());
-		mainPanel.add(parent, BorderLayout.PAGE_START);
+	   	commandePanel = new JPanel(new BorderLayout());
+		commandePanel.add(parent, BorderLayout.PAGE_START);
 		
 		
 		JButton ajoutCommande = new JButton("Ajouter une commande", new ImageIcon("ressources/images/Bouton_Ajout.png"));
@@ -90,10 +98,15 @@ public class WindowLauncher  extends JFrame {
 				WindowLauncher.this.repaint();
 			}
 		});
-		mainPanel.add(ajoutCommande, BorderLayout.PAGE_END);
+		commandePanel.add(ajoutCommande, BorderLayout.PAGE_END);
 		
 		
-		this.add(mainPanel);  
+		this.add(commandePanel);  
+		
+//		testPanel = new JPanel();
+//		testPanel.add(new JButton("HUEHUE"));
+//		testPanel.setVisible(false);
+//		this.add(testPanel); 
 			  
 		
 		//this.setSize(960,1080);
@@ -105,7 +118,7 @@ public class WindowLauncher  extends JFrame {
 		
 
 		// UTILISER CA POUR SWAP ENTRE COMMANDE OUTILS MENUS
-		//mainPanel.setVisible(false);
+//		commandePanel.setVisible(true);
 
 		System.out.println("THREAD window: "+Thread.currentThread().getId());
 		tb = new TwitchBot(config);
@@ -116,11 +129,43 @@ public class WindowLauncher  extends JFrame {
 		
 	}
 	
+	protected void saveCommands() {
+		// TODO Auto-generated method stub
+		
+		// Collecte des commandes et transformation en JSON
+		JSONObject rootJSON = new JSONObject();
+		JSONArray listCommande = new JSONArray();
+		for (Commande_JPanel c : this.listPanelCommande){
+			JSONObject commande = new JSONObject();
+			commande.put("nomCommande",c.getCommande().getNomCommande());
+			commande.put("resultatCommande",c.getCommande().getResultatCommande());
+			commande.put("activated",c.getCommande().isActivated()+"");
+			commande.put("isRegExp",c.getCommande().isRegExp()+"");
+			commande.put("isModOnly",c.getCommande().isModOnly()+"");
+			listCommande.add(commande);
+		}
+		rootJSON.put("commands", listCommande);
+		
+		// Ecriture dans le fichier JSON
+		FileWriter file;
+		try {
+			file = new FileWriter(PATH_TO_JSON);
+			file.write(rootJSON.toJSONString());
+			file.close();
+			System.out.println("Copie des commandes dans le JSON :\""+PATH_TO_JSON+"\"");
+			System.out.println(rootJSON.toJSONString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.err.println("Le fichier \""+PATH_TO_JSON+"\" n'a pas été trouvé lors de la réécriture des commandes OU le programme ne peut écrire dedans.");
+			e.printStackTrace();
+		}
+	}
+
 	protected void savePreferences() {
 		// TODO Auto-generated method stub
 		Wini ini;
 		try {
-			ini = new Wini(new File("ressources/config_bot.ini"));
+			ini = new Wini(new File(PATH_TO_INI));
 			ini.put("preferences", "positionX", (int) this.getLocation().getX());
 			ini.put("preferences", "positionY", (int)this.getLocation().getY());
 			ini.put("preferences", "sizeX", (int)this.getSize().getWidth());
@@ -149,14 +194,14 @@ public class WindowLauncher  extends JFrame {
 		this.config = new Configuration();
 		
 		try {
-			this.config.setupConfig("ressources/config_bot.ini");
+			this.config.setupConfig(PATH_TO_INI);
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
 		try {
-			this.config.setupCommands("ressources/command_list.json");
+			this.config.setupCommands(PATH_TO_JSON);
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -165,9 +210,31 @@ public class WindowLauncher  extends JFrame {
 	
 	public void remplirMenu(){
 		JMenuBar menuBar = new JMenuBar();
-		JMenu commandesMenu = new JMenu("Commandes");
-		JMenu jeuxMenu = new JMenu("Jeux");
-		JMenu outilsMenu = new JMenu("Outils");
+		JMenuItem commandesMenu = new JMenuItem("Commandes");
+		JMenuItem jeuxMenu = new JMenuItem("Jeux");
+		JMenuItem outilsMenu = new JMenuItem("Outils");
+		
+//		commandesMenu.addActionListener(new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				// TODO Auto-generated method stub
+//				System.out.println("TESTTTTTTTTTTTTTTT111111111111");
+//				WindowLauncher.this.commandePanel.setVisible(true);
+//				WindowLauncher.this.testPanel.setVisible(false);
+//			}
+//		});
+//		
+//		jeuxMenu.addActionListener(new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				// TODO Auto-generated method stub
+//				System.out.println("TESTTTTTTTTTTTTTTT22222222222");
+//				WindowLauncher.this.commandePanel.setVisible(false);
+//				WindowLauncher.this.testPanel.setVisible(true);
+//			}
+//		});
 		
 		menuBar.add(commandesMenu);
 		menuBar.add(jeuxMenu);
