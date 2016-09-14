@@ -268,72 +268,72 @@ public class Commande_JPanel extends JPanel {
 		this.anchor = anchor;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((activated == null) ? 0 : activated.hashCode());
-		result = prime * result + ((anchor == null) ? 0 : anchor.hashCode());
-		result = prime * result + ((commande == null) ? 0 : commande.hashCode());
-		result = prime * result + ((isRegExp == null) ? 0 : isRegExp.hashCode());
-		result = prime * result + ((modOnly == null) ? 0 : modOnly.hashCode());
-		result = prime * result + ((nomCommande == null) ? 0 : nomCommande.hashCode());
-		result = prime * result + ((resultatCommande == null) ? 0 : resultatCommande.hashCode());
-		result = prime * result + ((supprimer == null) ? 0 : supprimer.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Commande_JPanel other = (Commande_JPanel) obj;
-		if (activated == null) {
-			if (other.activated != null)
-				return false;
-		} else if (!activated.equals(other.activated))
-			return false;
-		if (anchor == null) {
-			if (other.anchor != null)
-				return false;
-		} else if (!anchor.equals(other.anchor))
-			return false;
-		if (commande == null) {
-			if (other.commande != null)
-				return false;
-		} else if (!commande.equals(other.commande))
-			return false;
-		if (isRegExp == null) {
-			if (other.isRegExp != null)
-				return false;
-		} else if (!isRegExp.equals(other.isRegExp))
-			return false;
-		if (modOnly == null) {
-			if (other.modOnly != null)
-				return false;
-		} else if (!modOnly.equals(other.modOnly))
-			return false;
-		if (nomCommande == null) {
-			if (other.nomCommande != null)
-				return false;
-		} else if (!nomCommande.equals(other.nomCommande))
-			return false;
-		if (resultatCommande == null) {
-			if (other.resultatCommande != null)
-				return false;
-		} else if (!resultatCommande.equals(other.resultatCommande))
-			return false;
-		if (supprimer == null) {
-			if (other.supprimer != null)
-				return false;
-		} else if (!supprimer.equals(other.supprimer))
-			return false;
-		return true;
-	}
+//	@Override
+//	public int hashCode() {
+//		final int prime = 31;
+//		int result = 1;
+//		result = prime * result + ((activated == null) ? 0 : activated.hashCode());
+//		result = prime * result + ((anchor == null) ? 0 : anchor.hashCode());
+//		result = prime * result + ((commande == null) ? 0 : commande.hashCode());
+//		result = prime * result + ((isRegExp == null) ? 0 : isRegExp.hashCode());
+//		result = prime * result + ((modOnly == null) ? 0 : modOnly.hashCode());
+//		result = prime * result + ((nomCommande == null) ? 0 : nomCommande.hashCode());
+//		result = prime * result + ((resultatCommande == null) ? 0 : resultatCommande.hashCode());
+//		result = prime * result + ((supprimer == null) ? 0 : supprimer.hashCode());
+//		return result;
+//	}
+//
+//	@Override
+//	public boolean equals(Object obj) {
+//		if (this == obj)
+//			return true;
+//		if (obj == null)
+//			return false;
+//		if (getClass() != obj.getClass())
+//			return false;
+//		Commande_JPanel other = (Commande_JPanel) obj;
+//		if (activated == null) {
+//			if (other.activated != null)
+//				return false;
+//		} else if (!activated.equals(other.activated))
+//			return false;
+//		if (anchor == null) {
+//			if (other.anchor != null)
+//				return false;
+//		} else if (!anchor.equals(other.anchor))
+//			return false;
+//		if (commande == null) {
+//			if (other.commande != null)
+//				return false;
+//		} else if (!commande.equals(other.commande))
+//			return false;
+//		if (isRegExp == null) {
+//			if (other.isRegExp != null)
+//				return false;
+//		} else if (!isRegExp.equals(other.isRegExp))
+//			return false;
+//		if (modOnly == null) {
+//			if (other.modOnly != null)
+//				return false;
+//		} else if (!modOnly.equals(other.modOnly))
+//			return false;
+//		if (nomCommande == null) {
+//			if (other.nomCommande != null)
+//				return false;
+//		} else if (!nomCommande.equals(other.nomCommande))
+//			return false;
+//		if (resultatCommande == null) {
+//			if (other.resultatCommande != null)
+//				return false;
+//		} else if (!resultatCommande.equals(other.resultatCommande))
+//			return false;
+//		if (supprimer == null) {
+//			if (other.supprimer != null)
+//				return false;
+//		} else if (!supprimer.equals(other.supprimer))
+//			return false;
+//		return true;
+//	}
 
 	
 	

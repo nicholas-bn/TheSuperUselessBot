@@ -23,9 +23,7 @@ public class TwitchBotTest {
 	
 	@Before
 	public void initialize() {
-		
-		System.out.println("111111111111111111111111111111111");
-		
+				
 		storeCommande = new ArrayList<String>();
 		c = new Configuration();
 		
@@ -34,8 +32,6 @@ public class TwitchBotTest {
 		} catch (FileNotFoundException e) {
 			fail("Le test aurait du trouver le fichier");
 		}
-	    
-		System.out.println("22222222222222222222222222222222222");
 		
 	    try {
 			c.setupCommands("ressources_test/json_test_file.json");
@@ -43,12 +39,9 @@ public class TwitchBotTest {
 			fail("Le test aurait du trouver le fichier");
 		}
 	    
-
-		System.out.println("33333333333333333333333333333333333");
-	    
 		t = new TwitchBot(c);
-
-		System.out.println("4444444444444444444444444444444444444");
+		Thread tt = new Thread(t);
+		tt.start();
 	}
 
 	@Test
