@@ -59,6 +59,7 @@ public class TwitchBot extends PircBot implements Runnable {
 		checkModo = true;
 		listModo = new ArrayList<String>();
 		this.setBufferMessage("");
+		System.out.println("test");
 		
 		this.setName(config.getBotName());
 		this.isConnected();
