@@ -1,6 +1,9 @@
 package main_package;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,8 +39,29 @@ public class ModerationThread implements Runnable {
 		
 	}
 
+	public static ArrayList<String> remplirListeDico(String path){
+		ArrayList<String> dico = new ArrayList<String>();
+		
+		File f = new File(path);
+		Scanner source;
+		try {
+			source = new Scanner(f);
+			while(source.hasNextLine()){
+				String mot = source.nextLine().replaceAll("^\\s+", "").replaceAll("\\s+$", "");
+				if(!mot.startsWith("#") && !mot.equals(""))
+					System.out.println("AAA-"+mot+"-AAA");
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.err.println("Problème lors de l'initialisation du scanner // Fichier non trouvé : "+f.toString());
+			e.printStackTrace();
+		}
+		return dico ;
+	}
+	
 	// MAIN
 	public static void main(String[] args) {
+		remplirListeDico("ressources/liste_mots_moderation.txt");
 		ArrayList<String> dictionnaire = new ArrayList<String>();
 		for(int i=0; i<200; i++){
 			if(i==198)
