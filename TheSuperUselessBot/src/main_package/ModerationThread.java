@@ -1,24 +1,23 @@
 package main_package;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ModerationThread implements Runnable {
 
 	private String sender;
-	private String messageSender;
+	private String message;
 	private ArrayList<String> dictionnaire;
 	private TwitchBot tb;
+	private String channel;
 	
-	public ModerationThread(TwitchBot tb, String sender, String messageSender, ArrayList<String> dictionnaire) {
+	public ModerationThread(TwitchBot tb, String channel, String sender, String message, ArrayList<String> dictionnaire) {
 		super();
 		this.tb = tb;
+		this.channel 		= channel;
 		this.sender 		= sender;
-		this.messageSender 	= messageSender;
+		this.message 		= message;
 		this.dictionnaire 	= dictionnaire;
 	}
 
@@ -29,51 +28,15 @@ public class ModerationThread implements Runnable {
 		Matcher m;
 		
 		for(String element : this.getDictionnaire()){
-			p = Pattern.compile(".*"+element+".*");
-			m = p.matcher(this.getMessageSender());
+			p = Pattern.compile(".*"+element+".*", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
+			m = p.matcher(this.getMessage());
 			if(m.matches()){
-				System.out.println("gtfo fgt");
+				this.getTb().sendMessage(this.getChannel(), "@"+this.getSender()+" TO pour : \""+element+"\"");
 				return;
 			}
 		}
+	}
 		
-	}
-
-	public static ArrayList<String> remplirListeDico(String path){
-		ArrayList<String> dico = new ArrayList<String>();
-		
-		File f = new File(path);
-		Scanner source;
-		try {
-			source = new Scanner(f);
-			while(source.hasNextLine()){
-				String mot = source.nextLine().replaceAll("^\\s+", "").replaceAll("\\s+$", "");
-				if(!mot.startsWith("#") && !mot.equals(""))
-					System.out.println("AAA-"+mot+"-AAA");
-			}
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			System.err.println("Problème lors de l'initialisation du scanner // Fichier non trouvé : "+f.toString());
-			e.printStackTrace();
-		}
-		return dico ;
-	}
-	
-	// MAIN
-	public static void main(String[] args) {
-		remplirListeDico("ressources/liste_mots_moderation.txt");
-		ArrayList<String> dictionnaire = new ArrayList<String>();
-		for(int i=0; i<200; i++){
-			if(i==198)
-				dictionnaire.add("GROSMOT");
-			else
-				dictionnaire.add(Integer.toString(i));
-		}
-		ModerationThread mt = new ModerationThread(null, "USER", "hola que tal GROSMOT!!!", dictionnaire);
-		Thread t = new Thread(mt);
-		t.start();
-	}
-	
 	public String getSender() {
 		return sender;
 	}
@@ -82,12 +45,12 @@ public class ModerationThread implements Runnable {
 		this.sender = sender;
 	}
 
-	public String getMessageSender() {
-		return messageSender;
+	public String getMessage() {
+		return message;
 	}
 
-	public void setMessageSender(String messageSender) {
-		this.messageSender = messageSender;
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 	public ArrayList<String> getDictionnaire() {
@@ -104,5 +67,13 @@ public class ModerationThread implements Runnable {
 
 	public void setTb(TwitchBot tb) {
 		this.tb = tb;
+	}
+
+	public String getChannel() {
+		return channel;
+	}
+
+	public void setChannel(String channel) {
+		this.channel = channel;
 	}
 }

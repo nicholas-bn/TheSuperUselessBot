@@ -1,16 +1,21 @@
 package main_package;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,6 +41,8 @@ public class TwitchBot extends PircBot implements Runnable {
 	public ArrayList<String> listModo;
 	public Configuration config;
 	public String bufferMessage;
+	public ArrayList<String> dictionnaireMotsInterdits;
+	public final String PATH_TO_TXT = "ressources/liste_mots_moderation.txt";
 
 	////////////////
 	// CONSTRUCTEUR
@@ -51,16 +58,23 @@ public class TwitchBot extends PircBot implements Runnable {
 	
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-		//config.setupConfig("d:\\TRAVAIL\\Perso\\Jar_BOT\\config_bot.ini");
 		System.out.println("THREAD TWITCH BOT: "+Thread.currentThread().getId());
 		this.channelToJoin = new String(config.getChannelToJoin());
 		CHIFFRERANDOM = false;
 		checkModo = true;
 		listModo = new ArrayList<String>();
+		dictionnaireMotsInterdits = new ArrayList<String>();
+		// Remplissage du dictionnaires de mots à censurer
+		this.setDictionnaireMotsInterdits(this.remplirListeDico(PATH_TO_TXT));
 		this.setBufferMessage("");
 		System.out.println("test");
 		
+		try {
+			this.setEncoding(Charset.forName("UTF-8").toString());
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		this.setName(config.getBotName());
 		this.isConnected();
 		this.setVerbose(true);
@@ -96,6 +110,11 @@ public class TwitchBot extends PircBot implements Runnable {
 
 		// reset du bufferString
 		this.setBufferMessage("");
+		
+		// Création d'un thread dédié à la modération
+		ModerationThread mt = new ModerationThread(this, channel, sender, message, this.getDictionnaireMotsInterdits());
+		Thread t = new Thread(mt);
+		t.start();
 		
 		// On vérifie dans la liste si le message envoyé correspond ou pas à un message dans le JSON.
 		for(Commande c : config.getListCommandes()){
@@ -259,6 +278,26 @@ public class TwitchBot extends PircBot implements Runnable {
 		}
 		return false;
 	}
+	
+	public ArrayList<String> remplirListeDico(String path){
+		ArrayList<String> dico = new ArrayList<String>();
+		
+		File f = new File(path);
+		Scanner source;
+		try {
+			source = new Scanner(f);
+			while(source.hasNextLine()){
+				String mot = source.nextLine().replaceAll("^\\s+", "").replaceAll("\\s+$", "");
+				if(!mot.startsWith("#") && !mot.equals(""))
+					dico.add(mot);
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.err.println("Problème lors de l'initialisation du scanner // Fichier non trouvé : "+f.toString());
+			e.printStackTrace();
+		}
+		return dico ;
+	}
 
 	public String getBufferMessage() {
 		return bufferMessage;
@@ -316,5 +355,11 @@ public class TwitchBot extends PircBot implements Runnable {
 		this.config = config;
 	}
 
+	public ArrayList<String> getDictionnaireMotsInterdits() {
+		return dictionnaireMotsInterdits;
+	}
 
+	public void setDictionnaireMotsInterdits(ArrayList<String> dictionnaireMotsInterdits) {
+		this.dictionnaireMotsInterdits = dictionnaireMotsInterdits;
+	}
 }
