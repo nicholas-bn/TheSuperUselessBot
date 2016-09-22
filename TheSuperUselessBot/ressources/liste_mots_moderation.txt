@@ -1,22 +1,21 @@
-#### Source : https://fr.wiktionary.org/wiki/Cat%C3%A9gorie:Insultes_en_fran%C3%A7ais
 abruti
-aller niquer sa mere
+aller niquer sa mère
 aller se faire enculer
 aller se faire endauffer
 aller se faire foutre
 aller se faire mettre
 andouille
 appareilleuse
-assimile
-asteque
-bande d'abrutis
-batard
+assimilé
+astèque
+bande d’abrutis
+bâtard
 bellicole
-bete
-bete a pleurer
-bete comme ses pieds
-bete comme un chou
-bete comme un cochon
+bête
+bête à pleurer
+bête comme ses pieds
+bête comme un chou
+bête comme un cochon
 biatch
 bic
 bicot
@@ -37,6 +36,7 @@ bounioul
 bourdille
 branleur
 brigand
+
 cacou
 cafre
 caldoche
@@ -47,7 +47,7 @@ cave
 chachar
 chagasse
 chauffard
-chien de chretien
+chien de chrétien
 chiennasse
 chienne
 chier
@@ -65,19 +65,20 @@ con comme ses pieds
 con comme un balai
 con comme un manche
 con comme une chaise
-con comme une valise sans poignee
+con comme une valise sans poignée
 conasse
 conchier
 connard
 connasse
 counifle
 courtaud
-cretin
+crétin
 crevure
 cricri
-crotte
+crotté
 crouille
-debile
+
+débile
 doryphore
 doxosophe
 doxosophie
@@ -87,28 +88,32 @@ ducon
 duconnot
 dugenoux
 dugland
-emmanche
+
+emmanché
 emmerder
 emmerdeur
 emmerdeuse
-empafe
-empapaoute
-encule
-encule de ta race
+empafé
+empapaouté
+enculé
+enculé de ta race
 enculer
 enfant de putain
 enfant de pute
 enfant de salaud
 enflure
-enfoire
+enfoiré
 envaselineur
-espece de
+épais
+espèce de
 espingoin
+
 face de chien
 face de pet
 face de rat
 FDP
-fils de batard
+fell
+fils de bâtard
 fils de chien
 fils de chienne
 fils de garce
@@ -119,9 +124,10 @@ fiotte
 folle
 fouteur
 fripouille
-frise
+frisé
 fritz
-garage a bite
+
+garage à bite
 garce
 gaupe
 GDM
@@ -139,7 +145,7 @@ grognasse
 guide de merde
 habitant
 halouf
-imbecile
+imbécile
 incapable
 islamo-gauchisme
 jean-foutre
@@ -147,12 +153,12 @@ jeannette
 journalope
 kikoo
 kikou
-lache
-lacheux
+lâche
+lâcheux
 lavette
 lopette
 magot
-makoume
+makoumé
 mal blanchi
 manche
 mange-merde
@@ -167,25 +173,26 @@ merdeux
 merdouillard
 minable
 minus
-miserable
+misérable
 moinaille
 moins-que-rien
 monacaille
 mongol
-mongol a batteries
+mongol à batteries
 moricaud
 mort aux vaches
 morue
 naze
-negro
-nez de boeuf
+négro
+nez de bœuf
 niac
 niaiseux
-niakoue
-nique sa mere
-nique ta mere
+niakoué
+nique sa mère
+nique ta mère
 niquer
-niquer sa mere
+niquer sa mère
+nœud
 NTM
 nul
 orchidoclaste
@@ -199,10 +206,10 @@ peau de vache
 Peau-Rouge
 peau-rouge
 pecque
-pedale
-pede
-pedoque
-pequenaud
+pédale
+pédé
+pédoque
+péquenaud
 petite bite
 pignouf
 pleutre
@@ -213,7 +220,7 @@ porcasse
 pouf
 pouffiasse
 poufiasse
-pounde
+poundé
 pourriture
 punaise
 putain
@@ -223,17 +230,17 @@ pute borgne
 putois
 raclure
 rat
-rate
+raté
 raton
 retourne aux asperges
-ripopee
+ripopée
 robespierrot
 roi des cons
 rosbeef
 rosbif
 rotwijf
-sac a foutre
-sac a merde
+sac à foutre
+sac à merde
 sagouin
 salaud
 sale
@@ -246,13 +253,13 @@ schleu
 schnock
 schnoque
 sous-merde
-stearique
+stéarique
 ta bouche
 ta gueule
-ta mere
-ta mere dans mon cul
+ta mère
+ta mère dans mon cul
 ta race
-ta soeur
+ta sœur
 ta yeule
 tache
 tafiole
@@ -261,18 +268,18 @@ tantouze
 tapette
 tarlouze
 tata
-tebe
-tete de boche
-tete de cochon
-tete de gland
-tete de veau
-teteux
-teube
-Thenardier
+tebé
+tête de boche
+tête de cochon
+tête de gland
+tête de veau
+téteux
+teubé
+Thénardier
 thon
 tocard
-trainee
-travail d'Arabe
+traînée
+travail d’Arabe
 triple buse
 trou de cul
 trou du cul
@@ -287,10 +294,10 @@ vert-de-gris
 vide-couilles
 vier
 vieux
-viedase
+viédase
 youd
 youpin
 youpine
 youpinisation
 youtre
-zguegue
+zguègue

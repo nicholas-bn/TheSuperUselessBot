@@ -1,5 +1,7 @@
 package main_package;
 
+import java.text.Normalizer;
+import java.text.Normalizer.Form;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -28,8 +30,8 @@ public class ModerationThread implements Runnable {
 		Matcher m;
 		
 		for(String element : this.getDictionnaire()){
-			p = Pattern.compile(".*"+element+".*", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
-			m = p.matcher(this.getMessage());
+			p = Pattern.compile(".*"+Normalizer.normalize(element, Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "")+".*", Pattern.CASE_INSENSITIVE);
+			m = p.matcher(Normalizer.normalize(this.getMessage(), Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", ""));
 			if(m.matches()){
 				this.getTb().sendMessage(this.getChannel(), "@"+this.getSender()+" TO pour : \""+element+"\"");
 				return;

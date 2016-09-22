@@ -67,10 +67,10 @@ public class TwitchBot extends PircBot implements Runnable {
 		// Remplissage du dictionnaires de mots à censurer
 		this.setDictionnaireMotsInterdits(this.remplirListeDico(PATH_TO_TXT));
 		this.setBufferMessage("");
-		System.out.println("test");
 		
 		try {
 			this.setEncoding(Charset.forName("UTF-8").toString());
+			System.out.println("CHARSET : "+Charset.forName("UTF-8").toString());
 		} catch (UnsupportedEncodingException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
