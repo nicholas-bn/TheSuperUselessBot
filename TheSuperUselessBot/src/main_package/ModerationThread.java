@@ -30,9 +30,15 @@ public class ModerationThread implements Runnable {
 		Matcher m;
 		
 		for(String element : this.getDictionnaire()){
+			// Utilisation des Normalizer pour enlever les accents et autres pour pouvoir comparer les deux mots nature
 			p = Pattern.compile(".*"+Normalizer.normalize(element, Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "")+".*", Pattern.CASE_INSENSITIVE);
 			m = p.matcher(Normalizer.normalize(this.getMessage(), Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", ""));
 			if(m.matches()){
+				if (element.length() > 2) {
+					element = element.substring(0, 1)+element.substring(1, element.length() - 1).replaceAll("\\w", "*")+element.substring(element.length() - 1, element.length());
+				} else {
+					element = element.replaceAll("\\w", "*");
+				}
 				this.getTb().sendMessage(this.getChannel(), "@"+this.getSender()+" TO pour : \""+element+"\"");
 				return;
 			}
