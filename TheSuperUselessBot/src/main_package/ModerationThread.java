@@ -34,12 +34,15 @@ public class ModerationThread implements Runnable {
 			p = Pattern.compile(".*"+Normalizer.normalize(element, Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "")+".*", Pattern.CASE_INSENSITIVE);
 			m = p.matcher(Normalizer.normalize(this.getMessage(), Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", ""));
 			if(m.matches()){
+				// Si c'est inferieur a 2 on remplace tous les caractéres par *
 				if (element.length() > 2) {
+					// Autrement on prend le premier caractere et le dernier et tous les caractéres centraux étant une lettre (\\w = [a-zA-Z_0-9]) sont remplacés par un *
 					element = element.substring(0, 1)+element.substring(1, element.length() - 1).replaceAll("\\w", "*")+element.substring(element.length() - 1, element.length());
 				} else {
 					element = element.replaceAll("\\w", "*");
 				}
-				this.getTb().sendMessage(this.getChannel(), "@"+this.getSender()+" TO pour : \""+element+"\"");
+				this.getTb().sendMessage(this.getChannel(), "@"+this.getSender()+" TO 60s pour : \""+element+"\"");
+				this.getTb().sendMessage(this.getChannel(), ".timeout " + this.getSender() + " 60");
 				return;
 			}
 		}
