@@ -1,4 +1,5 @@
 package main_package;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -27,13 +28,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class TwitchBot extends PircBot implements Runnable {
-	
-	
-	
+
 	//////////
 	// PARAM
 	//////////
-	
+
 	public boolean CHIFFRERANDOM = false;
 	public boolean checkModo = false;
 	public int chiffreCHIFFRERANDOM = 0;
@@ -47,18 +46,18 @@ public class TwitchBot extends PircBot implements Runnable {
 	////////////////
 	// CONSTRUCTEUR
 	////////////////
-	
-	public TwitchBot(Configuration c){
+
+	public TwitchBot(Configuration c) {
 		config = c;
 	}
-	
+
 	////////////
 	// METHODES
 	////////////
-	
+
 	@Override
 	public void run() {
-		System.out.println("THREAD TWITCH BOT: "+Thread.currentThread().getId());
+		System.out.println("THREAD TWITCH BOT: " + Thread.currentThread().getId());
 		this.channelToJoin = new String(config.getChannelToJoin());
 		CHIFFRERANDOM = false;
 		checkModo = true;
@@ -67,10 +66,10 @@ public class TwitchBot extends PircBot implements Runnable {
 		// Remplissage du dictionnaires de mots à censurer
 		this.setDictionnaireMotsInterdits(this.remplirListeDico(PATH_TO_TXT));
 		this.setBufferMessage("");
-		
+
 		try {
 			this.setEncoding(Charset.forName("UTF-8").toString());
-			System.out.println("CHARSET : "+Charset.forName("UTF-8").toString());
+			System.out.println("CHARSET : " + Charset.forName("UTF-8").toString());
 		} catch (UnsupportedEncodingException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -78,7 +77,7 @@ public class TwitchBot extends PircBot implements Runnable {
 		this.setName(config.getBotName());
 		this.isConnected();
 		this.setVerbose(true);
-		
+
 		try {
 			this.connect(config.getUrl(), config.getPort(), config.getoAuth());
 		} catch (NickAlreadyInUseException e) {
@@ -91,86 +90,89 @@ public class TwitchBot extends PircBot implements Runnable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		this.joinChannel("#"+config.getChannelToJoin());
-		this.sendAction("#"+config.getChannelToJoin(), " vient de se connecter !");
+
+		this.joinChannel("#" + config.getChannelToJoin());
+		this.sendAction("#" + config.getChannelToJoin(), " vient de se connecter !");
 	}
-	
-	
+
 	@Override
 	protected void onConnect() {
-		
-		
+
 		this.sendRawLine("CAP REQ :twitch.tv/membership");
 		this.sendRawLine("CAP REQ :twitch.tv/commands");
-		this.sendMessage("#"+channelToJoin, ".mods"); // Commande pour afficher la liste des modérateur et récupéré par onNotice
+		this.sendMessage("#" + channelToJoin, ".mods"); // Commande pour
+														// afficher la liste des
+														// modérateur et
+														// récupéré par onNotice
 	}
 
 	public void onMessage(String channel, String sender, String login, String hostname, String message) {
 
 		// reset du bufferString
 		this.setBufferMessage("");
-		
+
 		// Création d'un thread dédié à la modération
 		ModerationThread mt = new ModerationThread(this, channel, sender, message, this.getDictionnaireMotsInterdits());
 		Thread t = new Thread(mt);
 		t.start();
-		
-		// On vérifie dans la liste si le message envoyé correspond ou pas à un message dans le JSON.
-		for(Commande c : config.getListCommandes()){
+
+		// On vérifie dans la liste si le message envoyé correspond ou pas à un
+		// message dans le JSON.
+		for (Commande c : config.getListCommandes()) {
 			String returnCheckCommand;
-			if(!c.isModOnly()) {
+			if (!c.isModOnly()) {
 				returnCheckCommand = c.checkCommand(channel, sender, login, hostname, message, false);
-			}
-			else {
+			} else {
 				returnCheckCommand = c.checkCommand(channel, sender, login, hostname, message, this.isMod(sender));
 			}
-			if (!returnCheckCommand.equals("")){
-				sendMessage(channel, bufferMessage=returnCheckCommand);
+			if (!returnCheckCommand.equals("")) {
+				sendMessage(channel, bufferMessage = returnCheckCommand);
 				return;
 			}
 		}
-		
+
 		// INFO
 		if (message.equalsIgnoreCase("info")) {
-			sendMessage(channel, bufferMessage=listModo.toString());
+			sendMessage(channel, bufferMessage = listModo.toString());
 			System.out.println(bufferMessage);
 			return;
 		}
-	
+
 		// POLL
-		Pattern pattern = Pattern.compile("!poll *//.*//.*//.*" ,Pattern.CASE_INSENSITIVE);
+		Pattern pattern = Pattern.compile("!poll *//.*//.*//.*", Pattern.CASE_INSENSITIVE);
 		Matcher m = pattern.matcher(message);
-		if(m.matches()){
+		if (m.matches()) {
 			try {
-				if(isMod(sender)){
+				if (isMod(sender)) {
 					requestAPIStrawpoll(channel, sender, login, hostname, message);
 					return;
-				}else{
-					sendMessage(channel, bufferMessage="NotLikeThis Vous n'avez pas les droits pour creer un strawpoll NotLikeThis");
+				} else {
+					sendMessage(channel,
+							bufferMessage = "NotLikeThis Vous n'avez pas les droits pour creer un strawpoll NotLikeThis");
 					return;
-					
+
 				}
-					
+
 			} catch (JSONException | IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		
+
 		// DISCONNECT
-		if (message.equalsIgnoreCase("disconnect") && (sender.equalsIgnoreCase(channelToJoin) || sender.equalsIgnoreCase("thronghar"))) {
-			deconnexion ();
+		if (message.equalsIgnoreCase("disconnect")
+				&& (sender.equalsIgnoreCase(channelToJoin) || sender.equalsIgnoreCase("thronghar"))) {
+			deconnexion();
 		}
-		
+
 		// SUICIDE
 		if (message.equalsIgnoreCase("!suicide")) {
-			sendMessage(channel, bufferMessage="rip " + sender);
-			sendMessage(channel, bufferMessage=".timeout " + sender + " 10");
+			sendMessage(channel, bufferMessage = "rip " + sender);
+			sendMessage(channel, bufferMessage = ".timeout " + sender + " 10");
 			return;
 		}
 
-		//CHIFFRE RANDOM debut		
+		// CHIFFRE RANDOM debut
 		if (message.equalsIgnoreCase("!random") && CHIFFRERANDOM == false) {
 			sendMessage(channel, "C'est l'heure du random les petits fruits ! Choisissez un nombre entre 1 et 10.");
 			CHIFFRERANDOM = true;
@@ -178,20 +180,20 @@ public class TwitchBot extends PircBot implements Runnable {
 			chiffreCHIFFRERANDOM = rn.nextInt(10 - 0 + 1) + 0;
 			return;
 		}
-		
-		//CHIFFRE RANDOM fin
+
+		// CHIFFRE RANDOM fin
 		if (NumberUtils.isNumber(message) && CHIFFRERANDOM == true) {
 			if (Integer.parseInt(message) == chiffreCHIFFRERANDOM) {
 				sendMessage(channel, sender + " a trouve le bon chiffre ! (" + chiffreCHIFFRERANDOM + ")");
-				CHIFFRERANDOM=false;
+				CHIFFRERANDOM = false;
 			}
 			return;
 		}
 	}
-	
-	public void deconnexion () {
-		sendMessage("#"+this.getChannelToJoin(), bufferMessage="bye bb");
-		sendAction("#"+channelToJoin, " vient de se deconnecter ! ");
+
+	public void deconnexion() {
+		sendMessage("#" + this.getChannelToJoin(), bufferMessage = "bye bb");
+		sendAction("#" + channelToJoin, " vient de se deconnecter ! ");
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
@@ -201,102 +203,115 @@ public class TwitchBot extends PircBot implements Runnable {
 		this.disconnect();
 		System.exit(0);
 	}
-	
-	
-	// Méthode temporaire créée car on ne peut définir directement sur la méthode onMessage qu'elle peut "throws" des exceptions
-	public void requestAPIStrawpoll(String channel, String sender, String login, String hostname, String message) throws JSONException, MalformedURLException, IOException {
-		
+
+	// Méthode temporaire créée car on ne peut définir directement sur la
+	// méthode onMessage qu'elle peut "throws" des exceptions
+	public void requestAPIStrawpoll(String channel, String sender, String login, String hostname, String message)
+			throws JSONException, MalformedURLException, IOException {
+
 		// On définit les arguments JSON
 		List<String> options = new ArrayList<>();
 		List<String> tempo = new ArrayList<>();
-		tempo=Arrays.asList((message.split("//")));
-		
-		
-		
+		tempo = Arrays.asList((message.split("//")));
+
 		// On ajoute les options à part le !poll et le titre
-		int i=0;
-		for(String s : tempo){
-			if(i>1)
+		int i = 0;
+		for (String s : tempo) {
+			if (i > 1)
 				options.add(s);
 			i++;
 		}
-		
+
 		// On configure le json
 		JSONObject json = new JSONObject().put("title", tempo.get(1)).put("options", options);
 
-		// On ouvre la connection avec l'API strawpoll 
-        HttpURLConnection con;
-        con = (HttpURLConnection) new URL("http://strawpoll.me/api/v2/polls").openConnection();
-        con.setRequestMethod("POST");
-        con.setRequestProperty("User-Agent", "Mozilla");
-        con.setRequestProperty("Content-Type", "application/json");
-        con.setDoOutput(true);
-        
-        // On met dans un buffer
-        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(con.getOutputStream()))) {
-            writer.write(json.toString());
-        }
-        
-        // On vérifie le code de retour
-        int code = con.getResponseCode();
-        if (code != 201 && code != 200) {
-            System.out.println("La création du poll a retourné un code (" + code + ") différent de 200 ou 201");
-            return;
-        }
-        StringBuilder response = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream()))) {
-            String input;
-            while ((input = reader.readLine()) != null) {
-                response.append(input).append("\n");
-            }
-        }
-        sendMessage(channel, bufferMessage="www.strawpoll.me/"+new JSONObject(response.toString()).getInt("id"));
-	}
-	
-	public void onNotice(String sourceNick, String sourceLogin, String sourceHostname, String target, String notice){
-		
-		if(checkModo){
-			Pattern pattern = Pattern.compile(".*The moderators of this room are.*" ,Pattern.CASE_INSENSITIVE);
-			Matcher m = pattern.matcher(notice);
-			if(m.matches()){
-				this.listModo=getListMods(notice);
-				checkModo=false;
+		// On ouvre la connection avec l'API strawpoll
+		HttpURLConnection con;
+		con = (HttpURLConnection) new URL("http://strawpoll.me/api/v2/polls").openConnection();
+		con.setRequestMethod("POST");
+		con.setRequestProperty("User-Agent", "Mozilla");
+		con.setRequestProperty("Content-Type", "application/json");
+		con.setDoOutput(true);
+
+		// On met dans un buffer
+		try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(con.getOutputStream()))) {
+			writer.write(json.toString());
+		}
+
+		// On vérifie le code de retour
+		int code = con.getResponseCode();
+		if (code != 201 && code != 200) {
+			System.out.println("La création du poll a retourné un code (" + code + ") différent de 200 ou 201");
+			return;
+		}
+		StringBuilder response = new StringBuilder();
+		try (BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream()))) {
+			String input;
+			while ((input = reader.readLine()) != null) {
+				response.append(input).append("\n");
 			}
 		}
-		
+		sendMessage(channel, bufferMessage = "www.strawpoll.me/" + new JSONObject(response.toString()).getInt("id"));
 	}
-	
-	public ArrayList<String> getListMods(String sample){
+
+	public void onNotice(String sourceNick, String sourceLogin, String sourceHostname, String target, String notice) {
+
+		if (checkModo) {
+			Pattern pattern = Pattern.compile(".*The moderators of this room are.*", Pattern.CASE_INSENSITIVE);
+			Matcher m = pattern.matcher(notice);
+			if (m.matches()) {
+				this.listModo = getListMods(notice);
+				checkModo = false;
+			}
+		}
+
+	}
+
+	public ArrayList<String> getListMods(String sample) {
 		String sampleAfterReplace = sample.replaceFirst(".*The moderators of this room are: ", "");
 		return new ArrayList<String>(Arrays.asList(sampleAfterReplace.split(",")));
 	}
-	
-	public boolean isMod (String userToTest){
-		for(String s:this.listModo){
-			if(s.replaceAll(" ", "").equalsIgnoreCase(userToTest.replaceAll(" ", ""))) // On enleve les espaces restant grace aux replaceAll et on compare en ignorant la casse
+
+	public boolean isMod(String userToTest) {
+		for (String s : this.listModo) {
+			if (s.replaceAll(" ", "").equalsIgnoreCase(userToTest.replaceAll(" ", ""))) // On
+																						// enleve
+																						// les
+																						// espaces
+																						// restant
+																						// grace
+																						// aux
+																						// replaceAll
+																						// et
+																						// on
+																						// compare
+																						// en
+																						// ignorant
+																						// la
+																						// casse
 				return true;
 		}
 		return false;
 	}
-	
-	public ArrayList<String> remplirListeDico(String path){
+
+	public ArrayList<String> remplirListeDico(String path) {
 		ArrayList<String> dico = new ArrayList<String>();
-		
+
 		File f = new File(path);
 		Scanner source;
 		try {
 			source = new Scanner(f);
-			while(source.hasNextLine()){
+			while (source.hasNextLine()) {
 				String mot = source.nextLine().replaceAll("^\\s+", "").replaceAll("\\s+$", "");
-				if(!mot.startsWith("#") && !mot.equals(""))
+				if (!mot.startsWith("#") && !mot.equals(""))
 					dico.add(mot);
 			}
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
-			System.err.println("Problème lors de l'initialisation du scanner // Fichier non trouvé : "+f.toString());
+			System.err.println("Problème lors de l'initialisation du scanner // Fichier non trouvé : " + f.toString());
 			e.printStackTrace();
 		}
-		return dico ;
+		return dico;
 	}
 
 	public String getBufferMessage() {

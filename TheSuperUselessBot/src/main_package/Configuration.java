@@ -15,14 +15,13 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-
 public class Configuration {
 
-	public String 	channelToJoin;
-	public String 	oAuth;
-	public String 	botName;
-	public int 		port;
-	public String 	url;
+	public String channelToJoin;
+	public String oAuth;
+	public String botName;
+	public int port;
+	public String url;
 	public ArrayList<Commande> listCommandes;
 	Point positionFrame;
 	Dimension sizeFrame;
@@ -58,7 +57,7 @@ public class Configuration {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	
+
 	public String getChannelToJoin() {
 		return channelToJoin;
 	}
@@ -91,16 +90,15 @@ public class Configuration {
 		this.sizeFrame = sizeFrame;
 	}
 
-	public void setupConfig(String pathToINI) throws FileNotFoundException{
-		
+	public void setupConfig(String pathToINI) throws FileNotFoundException {
+
 		File f = new File(pathToINI);
-		if(f.exists() && !f.isDirectory()) { 
+		if (f.exists() && !f.isDirectory()) {
 			System.out.println("Le fichier \"config_bot.ini\" a été trouvé.");
-		}
-		else {
+		} else {
 			throw new FileNotFoundException("Le fichier \"config_bot.ini\" n'a pas été trouvé.");
 		}
-		
+
 		Wini ini;
 		try {
 			ini = new Wini(f);
@@ -109,10 +107,12 @@ public class Configuration {
 			this.setoAuth(ini.get("config", "oauth"));
 			this.setPort(ini.get("config", "port", int.class));
 			this.setUrl(ini.get("config", "url"));
-			
-			this.setPositionFrame(new Point(ini.get("preferences", "positionX", int.class), ini.get("preferences", "positionY", int.class)));
-			this.setSizeFrame(new Dimension(ini.get("preferences", "sizeX", int.class), ini.get("preferences", "sizeY", int.class)));
-			
+
+			this.setPositionFrame(new Point(ini.get("preferences", "positionX", int.class),
+					ini.get("preferences", "positionY", int.class)));
+			this.setSizeFrame(new Dimension(ini.get("preferences", "sizeX", int.class),
+					ini.get("preferences", "sizeY", int.class)));
+
 		} catch (InvalidFileFormatException e) {
 			// TODO Auto-generated catch block
 			System.err.println("InvalidFileFormatException");
@@ -123,47 +123,47 @@ public class Configuration {
 			e.printStackTrace();
 		}
 	}
-	
-	public void setupCommands(String pathToJSON)throws FileNotFoundException{
-		
-		ArrayList<Commande> returnCommand = new ArrayList<Commande>();		
+
+	public void setupCommands(String pathToJSON) throws FileNotFoundException {
+
+		ArrayList<Commande> returnCommand = new ArrayList<Commande>();
 		JSONParser parser = new JSONParser();
 
-        try {
-            FileReader fileReader = new FileReader(pathToJSON);
-        	System.out.println("Le fichier \"command_list.json\" a été trouvé.");
-            JSONObject json = (JSONObject) parser.parse(fileReader);
-            JSONArray commands = (JSONArray) json.get("commands");
-            
-            for(int j=0; j<commands.size();j++){
-            	JSONObject tempoCommande = (JSONObject) commands.get(j);
-            	
-            	String nom = tempoCommande.get("nomCommande").toString();
-            	String resultat = tempoCommande.get("resultatCommande").toString();
-            	boolean activated = Boolean.parseBoolean(tempoCommande.get("activated").toString());
-            	boolean regexp = Boolean.parseBoolean(tempoCommande.get("isRegExp").toString());
-            	boolean modonly = Boolean.parseBoolean(tempoCommande.get("isModOnly").toString());
-            	
-            	Commande c = new Commande(nom, resultat, activated, regexp, modonly);
-            	System.out.println("Commande "+j+"( "+c.toString()+" )");
-            	returnCommand.add(c);
-            	
-            }
-            
+		try {
+			FileReader fileReader = new FileReader(pathToJSON);
+			System.out.println("Le fichier \"command_list.json\" a été trouvé.");
+			JSONObject json = (JSONObject) parser.parse(fileReader);
+			JSONArray commands = (JSONArray) json.get("commands");
 
-        } catch (FileNotFoundException fx) {
-//        	System.err.println("Le fichier \"command_list.json\" n'a pas été trouvé.");
-//          fx.printStackTrace();
-        	throw new FileNotFoundException("Le fichier \"command_list.json\" n'a pas été trouvé.");
-        } catch (IOException eio) {
+			for (int j = 0; j < commands.size(); j++) {
+				JSONObject tempoCommande = (JSONObject) commands.get(j);
+
+				String nom = tempoCommande.get("nomCommande").toString();
+				String resultat = tempoCommande.get("resultatCommande").toString();
+				boolean activated = Boolean.parseBoolean(tempoCommande.get("activated").toString());
+				boolean regexp = Boolean.parseBoolean(tempoCommande.get("isRegExp").toString());
+				boolean modonly = Boolean.parseBoolean(tempoCommande.get("isModOnly").toString());
+
+				Commande c = new Commande(nom, resultat, activated, regexp, modonly);
+				System.out.println("Commande " + j + "( " + c.toString() + " )");
+				returnCommand.add(c);
+
+			}
+
+		} catch (FileNotFoundException fx) {
+			// System.err.println("Le fichier \"command_list.json\" n'a pas été
+			// trouvé.");
+			// fx.printStackTrace();
+			throw new FileNotFoundException("Le fichier \"command_list.json\" n'a pas été trouvé.");
+		} catch (IOException eio) {
 			// TODO Auto-generated catch block
 			eio.printStackTrace();
-		}catch (ParseException pe) {
+		} catch (ParseException pe) {
 			// TODO Auto-generated catch block
 			pe.printStackTrace();
 		}
-		
+
 		this.setListCommandes(returnCommand);
 	}
-	
+
 }

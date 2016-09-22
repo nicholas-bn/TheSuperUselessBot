@@ -13,14 +13,15 @@ public class ModerationThread implements Runnable {
 	private ArrayList<String> dictionnaire;
 	private TwitchBot tb;
 	private String channel;
-	
-	public ModerationThread(TwitchBot tb, String channel, String sender, String message, ArrayList<String> dictionnaire) {
+
+	public ModerationThread(TwitchBot tb, String channel, String sender, String message,
+			ArrayList<String> dictionnaire) {
 		super();
 		this.tb = tb;
-		this.channel 		= channel;
-		this.sender 		= sender;
-		this.message 		= message;
-		this.dictionnaire 	= dictionnaire;
+		this.channel = channel;
+		this.sender = sender;
+		this.message = message;
+		this.dictionnaire = dictionnaire;
 	}
 
 	@Override
@@ -28,26 +29,37 @@ public class ModerationThread implements Runnable {
 		// TODO Auto-generated method stub
 		Pattern p;
 		Matcher m;
-		
-		for(String element : this.getDictionnaire()){
-			// Utilisation des Normalizer pour enlever les accents et autres pour pouvoir comparer les deux mots nature
-			p = Pattern.compile(".*"+Normalizer.normalize(element, Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "")+".*", Pattern.CASE_INSENSITIVE);
-			m = p.matcher(Normalizer.normalize(this.getMessage(), Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", ""));
-			if(m.matches()){
+
+		for (String element : this.getDictionnaire()) {
+			// Utilisation des Normalizer pour enlever les accents et autres
+			// pour pouvoir comparer les deux mots nature
+			p = Pattern
+					.compile(
+							".*" + Normalizer.normalize(element, Form.NFD)
+									.replaceAll("\\p{InCombiningDiacriticalMarks}+", "") + ".*",
+							Pattern.CASE_INSENSITIVE);
+			m = p.matcher(Normalizer.normalize(this.getMessage(), Form.NFD)
+					.replaceAll("\\p{InCombiningDiacriticalMarks}+", ""));
+			if (m.matches()) {
 				// Si c'est inferieur a 2 on remplace tous les caractéres par *
 				if (element.length() > 2) {
-					// Autrement on prend le premier caractere et le dernier et tous les caractéres centraux étant une lettre (\\w = [a-zA-Z_0-9]) sont remplacés par un *
-					element = element.substring(0, 1)+element.substring(1, element.length() - 1).replaceAll("\\w", "*")+element.substring(element.length() - 1, element.length());
+					// Autrement on prend le premier caractere et le dernier et
+					// tous les caractéres centraux étant une lettre (\\w =
+					// [a-zA-Z_0-9]) sont remplacés par un *
+					element = element.substring(0, 1)
+							+ element.substring(1, element.length() - 1).replaceAll("\\w", "*")
+							+ element.substring(element.length() - 1, element.length());
 				} else {
 					element = element.replaceAll("\\w", "*");
 				}
-				this.getTb().sendMessage(this.getChannel(), "@"+this.getSender()+" TO 60s pour : \""+element+"\"");
+				this.getTb().sendMessage(this.getChannel(),
+						"@" + this.getSender() + " TO 60s pour : \"" + element + "\"");
 				this.getTb().sendMessage(this.getChannel(), ".timeout " + this.getSender() + " 60");
 				return;
 			}
 		}
 	}
-		
+
 	public String getSender() {
 		return sender;
 	}
