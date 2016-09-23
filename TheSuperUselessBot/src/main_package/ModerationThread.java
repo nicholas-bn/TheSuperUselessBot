@@ -27,9 +27,12 @@ public class ModerationThread implements Runnable {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+		tempo();
+	}
+	public void tempo(){
 		Pattern p;
 		Matcher m;
-
+		System.out.println("THREAD MODERATION : "+Thread.currentThread().getId());
 		for (String element : this.getDictionnaire()) {
 			// Utilisation des Normalizer pour enlever les accents et autres
 			// pour pouvoir comparer les deux mots nature
@@ -55,9 +58,12 @@ public class ModerationThread implements Runnable {
 				this.getTb().sendMessage(this.getChannel(),
 						"@" + this.getSender() + " TO 60s pour : \"" + element + "\"");
 				this.getTb().sendMessage(this.getChannel(), ".timeout " + this.getSender() + " 60");
+				Thread.currentThread().interrupt();
 				return;
 			}
 		}
+		Thread.currentThread().interrupt();
+		return;
 	}
 
 	public String getSender() {
