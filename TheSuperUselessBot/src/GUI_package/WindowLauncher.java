@@ -1,17 +1,21 @@
 package GUI_package;
 
 import java.awt.BorderLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -57,6 +61,7 @@ public class WindowLauncher extends JFrame {
 
 		this.addWindowListener(l);
 
+		setListIcon();
 		remplirMenu();
 		loadConfig();
 
@@ -118,6 +123,25 @@ public class WindowLauncher extends JFrame {
 		Thread t = new Thread(tb);
 		t.start();
 
+	}
+
+	private void setListIcon() {
+		// TODO Auto-generated method stub
+		
+        final List<Image> icons = new ArrayList<Image>();
+        BufferedImage bi16;
+        BufferedImage bi32;
+        
+        try {
+			bi16 = ImageIO.read(new File("D:\\TRAVAIL\\Perso\\Jar_BOT\\icons_bot\\16_16.png"));
+			bi32 = ImageIO.read(new File("D:\\TRAVAIL\\Perso\\Jar_BOT\\icons_bot\\32_32.png"));
+			icons.add(bi16);
+			icons.add(bi32);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.setIconImages(icons);
 	}
 
 	@SuppressWarnings("unchecked")
