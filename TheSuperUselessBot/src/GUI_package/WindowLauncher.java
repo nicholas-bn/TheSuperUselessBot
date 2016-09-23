@@ -41,8 +41,9 @@ public class WindowLauncher extends JFrame {
 	JPanel parent;
 	JPanel commandePanel;
 	JPanel testPanel;
-	public final String PATH_TO_INI = "ressources/config_bot.ini";
-	public final String PATH_TO_JSON = "ressources/command_list.json";
+	public final String PATH_TO_INI 	= "ressources/config_bot.ini";
+	public final String PATH_TO_JSON 	= "ressources/command_list.json";
+	public final String PATH_TO_ICON 	= "ressources/images/TheSuperUselessBot_ICON.png";
 
 	public WindowLauncher() {
 		super("TheSuperUselessBot");
@@ -61,7 +62,7 @@ public class WindowLauncher extends JFrame {
 
 		this.addWindowListener(l);
 
-		setListIcon();
+		setIcon();
 		remplirMenu();
 		loadConfig();
 
@@ -108,9 +109,6 @@ public class WindowLauncher extends JFrame {
 		// testPanel.setVisible(false);
 		// this.add(testPanel);
 
-		// this.setSize(960,1080);
-		// this.setSize(1060,1080);
-		// this.setLocation(1920, 0);
 		this.setSize(config.getSizeFrame().width, config.getSizeFrame().height);
 		this.setLocation(config.getPositionFrame().x, config.getPositionFrame().y);
 		this.setVisible(true);
@@ -125,23 +123,18 @@ public class WindowLauncher extends JFrame {
 
 	}
 
-	private void setListIcon() {
+	private void setIcon() {
 		// TODO Auto-generated method stub
 		
-        final List<Image> icons = new ArrayList<Image>();
-        BufferedImage bi16;
-        BufferedImage bi32;
-        
-        try {
-			bi16 = ImageIO.read(new File("D:\\TRAVAIL\\Perso\\Jar_BOT\\icons_bot\\16_16.png"));
-			bi32 = ImageIO.read(new File("D:\\TRAVAIL\\Perso\\Jar_BOT\\icons_bot\\32_32.png"));
-			icons.add(bi16);
-			icons.add(bi32);
+		BufferedImage image;
+		try {
+			image = ImageIO.read(new File(PATH_TO_ICON));
+			this.setIconImage(image);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			System.err.println("Le fichier d'icône n'a pas été trouvé : "+PATH_TO_ICON);
 			e.printStackTrace();
 		}
-		this.setIconImages(icons);
 	}
 
 	@SuppressWarnings("unchecked")
