@@ -151,7 +151,7 @@ public class TwitchBot extends PircBot implements Runnable {
 					return;
 				} else {
 					sendMessage(channel,
-							bufferMessage = "NotLikeThis Vous n'avez pas les droits pour creer un strawpoll NotLikeThis");
+							bufferMessage = "NotLikeThis Vous n'avez pas les droits pour créer un strawpoll NotLikeThis");
 					return;
 				}
 
@@ -186,7 +186,7 @@ public class TwitchBot extends PircBot implements Runnable {
 		// CHIFFRE RANDOM fin
 		if (NumberUtils.isNumber(message) && CHIFFRERANDOM == true) {
 			if (Integer.parseInt(message) == chiffreCHIFFRERANDOM) {
-				sendMessage(channel, sender + " a trouve le bon chiffre ! (" + chiffreCHIFFRERANDOM + ")");
+				sendMessage(channel, sender + " a trouvé le bon chiffre ! (" + chiffreCHIFFRERANDOM + ")");
 				CHIFFRERANDOM = false;
 			}
 			return;
@@ -220,7 +220,7 @@ public class TwitchBot extends PircBot implements Runnable {
 
 	public void deconnexion() {
 		sendMessage("#" + this.getChannelToJoin(), bufferMessage = "bye bb");
-		sendAction("#" + channelToJoin, " vient de se deconnecter ! ");
+		sendAction("#" + channelToJoin, " vient de se déconnecter ! ");
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
