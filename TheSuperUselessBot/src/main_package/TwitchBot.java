@@ -41,6 +41,8 @@ public class TwitchBot extends PircBot implements Runnable {
 	public Configuration config;
 	public String bufferMessage;
 	public ArrayList<String> dictionnaireMotsInterdits;
+	private boolean PLANT;
+	private String plantValue;
 	public final String PATH_TO_TXT = "ressources/liste_mots_moderation.txt";
 
 	////////////////
@@ -60,7 +62,9 @@ public class TwitchBot extends PircBot implements Runnable {
 		System.out.println("THREAD TWITCH BOT: " + Thread.currentThread().getId());
 		this.channelToJoin = new String(config.getChannelToJoin());
 		CHIFFRERANDOM = false;
+		PLANT = false;
 		checkModo = true;
+		plantValue = "";
 		listModo = new ArrayList<String>();
 		dictionnaireMotsInterdits = new ArrayList<String>();
 		// Remplissage du dictionnaires de mots à censurer
@@ -100,10 +104,9 @@ public class TwitchBot extends PircBot implements Runnable {
 
 		this.sendRawLine("CAP REQ :twitch.tv/membership");
 		this.sendRawLine("CAP REQ :twitch.tv/commands");
-		this.sendMessage("#" + channelToJoin, ".mods"); // Commande pour
-														// afficher la liste des
-														// modérateur et
-														// récupéré par onNotice
+		this.sendMessage("#" + channelToJoin, ".mods");
+		// Commande pour afficher la liste des
+		// modérateur et récupéré par onNotice
 	}
 
 	public void onMessage(String channel, String sender, String login, String hostname, String message) {
@@ -150,7 +153,6 @@ public class TwitchBot extends PircBot implements Runnable {
 					sendMessage(channel,
 							bufferMessage = "NotLikeThis Vous n'avez pas les droits pour creer un strawpoll NotLikeThis");
 					return;
-
 				}
 
 			} catch (JSONException | IOException e) {
@@ -188,6 +190,27 @@ public class TwitchBot extends PircBot implements Runnable {
 				CHIFFRERANDOM = false;
 			}
 			return;
+		}
+
+		if (message.equalsIgnoreCase("!plant") && !PLANT) {
+			Random rn = new Random();
+			int outputRandom = rn.nextInt(3 - 0 + 0) + 1;
+			if (outputRandom == 1) {
+				plantValue = "!cut bleu";
+			} else if (outputRandom == 2) {
+				plantValue = "!cut rouge";
+			} else if (outputRandom == 3) {
+				plantValue = "!cut vert";
+			}
+			this.sendMessage(channel, "@" + sender + " vient de poser la bombe ! !cut rouge/bleu/vert pour defuse !");
+			PLANT = true;
+		}
+
+		if (message.startsWith("!cut ") && PLANT) {
+			if (message.equalsIgnoreCase(plantValue)) {
+				this.sendMessage(channel, "@" + sender + " a réussi à defuse la bombe !");
+				PLANT = false;
+			}
 		}
 	}
 
@@ -264,7 +287,6 @@ public class TwitchBot extends PircBot implements Runnable {
 				checkModo = false;
 			}
 		}
-
 	}
 
 	public ArrayList<String> getListMods(String sample) {
@@ -274,21 +296,9 @@ public class TwitchBot extends PircBot implements Runnable {
 
 	public boolean isMod(String userToTest) {
 		for (String s : this.listModo) {
-			if (s.replaceAll(" ", "").equalsIgnoreCase(userToTest.replaceAll(" ", ""))) // On
-																						// enleve
-																						// les
-																						// espaces
-																						// restant
-																						// grace
-																						// aux
-																						// replaceAll
-																						// et
-																						// on
-																						// compare
-																						// en
-																						// ignorant
-																						// la
-																						// casse
+			// On enleve les espaces restant grace aux replaceAll et
+			// on compare en ignorant la casse
+			if (s.replaceAll(" ", "").equalsIgnoreCase(userToTest.replaceAll(" ", "")))
 				return true;
 		}
 		return false;
