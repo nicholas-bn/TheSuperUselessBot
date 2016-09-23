@@ -212,6 +212,10 @@ public class TwitchBot extends PircBot implements Runnable {
 				PLANT = false;
 			}
 		}
+		
+		if (message.equalsIgnoreCase("!creator") || message.equalsIgnoreCase("!"+this.getName()) || message.equalsIgnoreCase("!bot")) {
+			this.sendMessage(channel, "@" + sender + ": Ce bot a été réalisé par Barnini Nicholas https://github.com/Barnini-Nicholas/TheSuperUselessBot");
+		}
 	}
 
 	public void deconnexion() {
