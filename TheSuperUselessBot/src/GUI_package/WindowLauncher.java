@@ -54,8 +54,11 @@ public class WindowLauncher extends JFrame {
 				WindowLauncher.this.savePreferences();
 				WindowLauncher.this.setVisible(false);
 				WindowLauncher.this.saveCommands();
-				if (tb != null) // Si il n'a pas été instancié
+				if (tb != null) { // Si il n'a pas été instancié
+					tb.gettSpam().interrupt();
 					tb.deconnexion();
+				}
+				
 				System.exit(0);
 			}
 		};

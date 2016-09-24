@@ -44,6 +44,8 @@ public class TwitchBot extends PircBot implements Runnable {
 	private boolean PLANT;
 	private String plantValue;
 	public final String PATH_TO_TXT = "ressources/liste_mots_moderation.txt";
+	private AntiSpamThread antiSpamThread;
+	private Thread tSpam;
 
 	////////////////
 	// CONSTRUCTEUR
@@ -67,6 +69,15 @@ public class TwitchBot extends PircBot implements Runnable {
 		plantValue = "";
 		listModo = new ArrayList<String>();
 		dictionnaireMotsInterdits = new ArrayList<String>();
+
+		// Lancement d'un thread daemon pour contrer les spams de message
+		// intempestifs
+		this.setAntiSpamThread(new AntiSpamThread(this));
+		tSpam = new Thread(this.getAntiSpamThread());
+		tSpam.setDaemon(true);
+		tSpam.start();
+		System.out.println("THREAD ID SPAM: "+tSpam.getId());
+		
 		// Remplissage du dictionnaires de mots à censurer
 		this.setDictionnaireMotsInterdits(this.remplirListeDico(PATH_TO_TXT));
 		this.setBufferMessage("");
@@ -114,6 +125,8 @@ public class TwitchBot extends PircBot implements Runnable {
 		// reset du bufferString
 		this.setBufferMessage("");
 
+		this.getAntiSpamThread().add(sender);
+		
 		// Création d'un thread dédié à la modération
 		ModerationThread mt = new ModerationThread(this, channel, sender, message, this.getDictionnaireMotsInterdits());
 		Thread t = new Thread(mt);
@@ -212,9 +225,11 @@ public class TwitchBot extends PircBot implements Runnable {
 				PLANT = false;
 			}
 		}
-		
-		if (message.equalsIgnoreCase("!creator") || message.equalsIgnoreCase("!"+this.getName()) || message.equalsIgnoreCase("!bot")) {
-			this.sendMessage(channel, "@" + sender + ": Ce bot a été réalisé par Barnini Nicholas https://github.com/Barnini-Nicholas/TheSuperUselessBot");
+
+		if (message.equalsIgnoreCase("!creator") || message.equalsIgnoreCase("!" + this.getName())
+				|| message.equalsIgnoreCase("!bot")) {
+			this.sendMessage(channel, "@" + sender
+					+ ": Ce bot a été réalisé par Barnini Nicholas https://github.com/Barnini-Nicholas/TheSuperUselessBot");
 		}
 	}
 
@@ -391,4 +406,41 @@ public class TwitchBot extends PircBot implements Runnable {
 	public void setDictionnaireMotsInterdits(ArrayList<String> dictionnaireMotsInterdits) {
 		this.dictionnaireMotsInterdits = dictionnaireMotsInterdits;
 	}
+
+	public boolean isPLANT() {
+		return PLANT;
+	}
+
+	public void setPLANT(boolean pLANT) {
+		PLANT = pLANT;
+	}
+
+	public String getPlantValue() {
+		return plantValue;
+	}
+
+	public void setPlantValue(String plantValue) {
+		this.plantValue = plantValue;
+	}
+
+	public AntiSpamThread getAntiSpamThread() {
+		return antiSpamThread;
+	}
+
+	public void setAntiSpamThread(AntiSpamThread antiSpamThread) {
+		this.antiSpamThread = antiSpamThread;
+	}
+
+	public String getPATH_TO_TXT() {
+		return PATH_TO_TXT;
+	}
+
+	public Thread gettSpam() {
+		return tSpam;
+	}
+
+	public void settSpam(Thread tSpam) {
+		this.tSpam = tSpam;
+	}
+
 }
