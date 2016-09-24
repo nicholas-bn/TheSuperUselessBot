@@ -11,7 +11,6 @@ astèque
 bande d’abrutis
 bâtard
 bellicole
-bête
 bête à pleurer
 bête comme ses pieds
 bête comme un chou
@@ -29,21 +28,18 @@ bougnoul
 bougnoule
 bougnoulisation
 bougnouliser
-bougre
 boukak
 boulet
 bounioul
 bourdille
 branleur
 brigand
-
 cacou
 cafre
 caldoche
 casse-bonbon
 casse-couille
 casse-couilles
-cave
 chachar
 chagasse
 chauffard
@@ -60,7 +56,6 @@ coche
 colon
 con
 con comme la lune
-con comme la Lune
 con comme ses pieds
 con comme un balai
 con comme un manche
@@ -77,7 +72,6 @@ crevure
 cricri
 crotté
 crouille
-
 débile
 doryphore
 doxosophe
@@ -88,7 +82,6 @@ ducon
 duconnot
 dugenoux
 dugland
-
 emmanché
 emmerder
 emmerdeur
@@ -107,12 +100,10 @@ envaselineur
 épais
 espèce de
 espingoin
-
 face de chien
 face de pet
 face de rat
 FDP
-fell
 fils de bâtard
 fils de chien
 fils de chienne
@@ -126,7 +117,6 @@ fouteur
 fripouille
 frisé
 fritz
-
 garage à bite
 garce
 gaupe
@@ -143,7 +133,6 @@ gourde
 gourgandine
 grognasse
 guide de merde
-habitant
 halouf
 imbécile
 incapable
@@ -153,21 +142,18 @@ jeannette
 journalope
 kikoo
 kikou
-lâche
 lâcheux
 lavette
 lopette
 magot
 makoumé
 mal blanchi
-manche
 mange-merde
 mangeux de marde
 marchandot
 margouilliste
 marsouin
 mauviette
-melon
 merde
 merdeux
 merdouillard
@@ -182,10 +168,8 @@ mongol à batteries
 moricaud
 mort aux vaches
 morue
-naze
 négro
 nez de bœuf
-niac
 niaiseux
 niakoué
 nique sa mère
@@ -194,10 +178,8 @@ niquer
 niquer sa mère
 nœud
 NTM
-nul
 orchidoclaste
 ordure
-ortho
 pakos
 panoufle
 patarin
@@ -212,12 +194,10 @@ pédoque
 péquenaud
 petite bite
 pignouf
-pleutre
 plouc
 porc
 porcas
 porcasse
-pouf
 pouffiasse
 poufiasse
 poundé
@@ -229,8 +209,6 @@ pute
 pute borgne
 putois
 raclure
-rat
-raté
 raton
 retourne aux asperges
 ripopée
@@ -243,11 +221,9 @@ sac à foutre
 sac à merde
 sagouin
 salaud
-sale
 salop
 salope
 satrouille
-sauvage
 schbeb
 schleu
 schnock
@@ -267,7 +243,6 @@ tantouserie
 tantouze
 tapette
 tarlouze
-tata
 tebé
 tête de boche
 tête de cochon
@@ -293,7 +268,6 @@ vendu
 vert-de-gris
 vide-couilles
 vier
-vieux
 viédase
 youd
 youpin
