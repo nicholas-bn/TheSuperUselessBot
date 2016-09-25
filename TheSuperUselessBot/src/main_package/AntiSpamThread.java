@@ -21,7 +21,7 @@ public class AntiSpamThread implements Runnable {
 	}
 
 	public void add(String sender) {
-		System.out.println("THREAD ID SPAM: HUEHE" + Thread.currentThread().getId());
+		System.out.println("THREAD ID SPAM: " + Thread.currentThread().getId());
 
 		ArrayList<Date> tempoDate;
 

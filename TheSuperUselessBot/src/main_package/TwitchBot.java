@@ -146,6 +146,37 @@ public class TwitchBot extends PircBot implements Runnable {
 				return;
 			}
 		}
+		
+		// Question au bot
+		Pattern pQuestion = Pattern.compile("\\s*"+this.getConfig().getBotName()+".*\\?\\s*", Pattern.CASE_INSENSITIVE);
+		Matcher mQuestion = pQuestion.matcher(message);
+		if (mQuestion.matches()){
+			Random rn = new Random();
+			int random = rn.nextInt(5 - 0 + 1) + 0;	
+			switch(random){
+				case 0:
+					System.out.println("Totalement d'accord !");
+					break;
+				case 1:
+					System.out.println("J'en suis sûr.");
+					break;
+				case 2:
+					System.out.println("C'est pas faux.");
+					break;
+				case 3:
+					System.out.println("Dans tes rêves.");
+					break;
+				case 4:
+					System.out.println("Je crois pas, non.");
+					break;
+				case 5:
+					System.out.println("Totalement faux !");
+					break;
+				default:
+					System.err.println("ERREUR : Fail random lors de la question au bot !");
+					break;
+			}
+		}
 
 		// INFO
 		if (message.equalsIgnoreCase("info")) {
