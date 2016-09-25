@@ -155,22 +155,22 @@ public class TwitchBot extends PircBot implements Runnable {
 			int random = rn.nextInt(5 - 0 + 1) + 0;	
 			switch(random){
 				case 0:
-					System.out.println("Totalement d'accord !");
+					this.sendMessage(channel, "@"+sender+" Evidemment !");
 					break;
 				case 1:
-					System.out.println("J'en suis sûr.");
+					this.sendMessage(channel, "@"+sender+" J'en suis sûr.");
 					break;
 				case 2:
-					System.out.println("C'est pas faux.");
+					this.sendMessage(channel, "@"+sender+" C'est pas faux.");
 					break;
 				case 3:
-					System.out.println("Dans tes rêves.");
+					this.sendMessage(channel, "@"+sender+" Dans tes rêves.");
 					break;
 				case 4:
-					System.out.println("Je crois pas, non.");
+					this.sendMessage(channel, "@"+sender+" Je ne crois pas, non.");
 					break;
 				case 5:
-					System.out.println("Totalement faux !");
+					this.sendMessage(channel, "@"+sender+" Totalement faux !");
 					break;
 				default:
 					System.err.println("ERREUR : Fail random lors de la question au bot !");
