@@ -43,6 +43,7 @@ public class TwitchBot extends PircBot implements Runnable {
 	public ArrayList<String> dictionnaireMotsInterdits;
 	private boolean PLANT;
 	private String plantValue;
+	private String plantSender;
 	public final String PATH_TO_TXT = "ressources/liste_mots_moderation.txt";
 	private AntiSpamThread antiSpamThread;
 	private Thread tSpam;
@@ -67,6 +68,7 @@ public class TwitchBot extends PircBot implements Runnable {
 		PLANT = false;
 		checkModo = true;
 		plantValue = "";
+		plantSender = "";
 		listModo = new ArrayList<String>();
 		dictionnaireMotsInterdits = new ArrayList<String>();
 
@@ -76,8 +78,8 @@ public class TwitchBot extends PircBot implements Runnable {
 		tSpam = new Thread(this.getAntiSpamThread());
 		tSpam.setDaemon(true);
 		tSpam.start();
-		System.out.println("THREAD ID SPAM: "+tSpam.getId());
-		
+		System.out.println("THREAD ID SPAM: " + tSpam.getId());
+
 		// Remplissage du dictionnaires de mots à censurer
 		this.setDictionnaireMotsInterdits(this.remplirListeDico(PATH_TO_TXT));
 		this.setBufferMessage("");
@@ -126,7 +128,7 @@ public class TwitchBot extends PircBot implements Runnable {
 		this.setBufferMessage("");
 
 		this.getAntiSpamThread().add(sender);
-		
+
 		// Création d'un thread dédié à la modération
 		ModerationThread mt = new ModerationThread(this, channel, sender, message, this.getDictionnaireMotsInterdits());
 		Thread t = new Thread(mt);
@@ -146,35 +148,36 @@ public class TwitchBot extends PircBot implements Runnable {
 				return;
 			}
 		}
-		
+
 		// Question au bot
-		Pattern pQuestion = Pattern.compile("\\s*"+this.getConfig().getBotName()+".*\\?\\s*", Pattern.CASE_INSENSITIVE);
+		Pattern pQuestion = Pattern.compile("\\s*" + this.getConfig().getBotName() + ".*\\?\\s*",
+				Pattern.CASE_INSENSITIVE);
 		Matcher mQuestion = pQuestion.matcher(message);
-		if (mQuestion.matches()){
+		if (mQuestion.matches()) {
 			Random rn = new Random();
-			int random = rn.nextInt(5 - 0 + 1) + 0;	
-			switch(random){
-				case 0:
-					this.sendMessage(channel, "@"+sender+" Evidemment !");
-					break;
-				case 1:
-					this.sendMessage(channel, "@"+sender+" J'en suis sûr.");
-					break;
-				case 2:
-					this.sendMessage(channel, "@"+sender+" C'est pas faux.");
-					break;
-				case 3:
-					this.sendMessage(channel, "@"+sender+" Dans tes rêves.");
-					break;
-				case 4:
-					this.sendMessage(channel, "@"+sender+" Je ne crois pas, non.");
-					break;
-				case 5:
-					this.sendMessage(channel, "@"+sender+" Totalement faux !");
-					break;
-				default:
-					System.err.println("ERREUR : Fail random lors de la question au bot !");
-					break;
+			int random = rn.nextInt(5 - 0 + 1) + 0;
+			switch (random) {
+			case 0:
+				this.sendMessage(channel, "@" + sender + " Evidemment !");
+				break;
+			case 1:
+				this.sendMessage(channel, "@" + sender + " J'en suis sûr.");
+				break;
+			case 2:
+				this.sendMessage(channel, "@" + sender + " C'est pas faux.");
+				break;
+			case 3:
+				this.sendMessage(channel, "@" + sender + " Dans tes rêves.");
+				break;
+			case 4:
+				this.sendMessage(channel, "@" + sender + " Je ne crois pas, non.");
+				break;
+			case 5:
+				this.sendMessage(channel, "@" + sender + " Totalement faux !");
+				break;
+			default:
+				System.err.println("ERREUR : Fail random lors de la question au bot !");
+				break;
 			}
 		}
 
@@ -236,6 +239,7 @@ public class TwitchBot extends PircBot implements Runnable {
 			return;
 		}
 
+		// PLANT COMMANDE début
 		if (message.equalsIgnoreCase("!plant") && !PLANT) {
 			Random rn = new Random();
 			int outputRandom = rn.nextInt(3 - 0 + 0) + 1;
@@ -248,12 +252,20 @@ public class TwitchBot extends PircBot implements Runnable {
 			}
 			this.sendMessage(channel, "@" + sender + " vient de poser la bombe ! !cut rouge/bleu/vert pour defuse !");
 			PLANT = true;
+			plantSender = sender;
 		}
 
-		if (message.startsWith("!cut ") && PLANT) {
+		// PLANT COMMANDE fin
+		if (message.startsWith("!cut ") && PLANT && !sender.equals(plantSender)) {
 			if (message.equalsIgnoreCase(plantValue)) {
 				this.sendMessage(channel, "@" + sender + " a réussi à defuse la bombe !");
 				PLANT = false;
+				plantSender = "";
+			} else if (message.equalsIgnoreCase("!cut bleu") || message.equalsIgnoreCase("!cut vert")
+					|| message.equalsIgnoreCase("!cut rouge")) {
+				this.sendMessage(channel, "@" + sender + " s'est trompé ! Il est maintenant mort ! RIP");
+				PLANT = false;
+				plantSender = "";
 			}
 		}
 
