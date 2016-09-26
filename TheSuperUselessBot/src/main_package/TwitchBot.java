@@ -208,6 +208,28 @@ public class TwitchBot extends PircBot implements Runnable {
 			}
 		}
 
+		// !COMMANDS
+		if (message.equalsIgnoreCase("!commandes") || message.equalsIgnoreCase("!commands")) {
+			StringBuilder sb = new StringBuilder();
+			sb.append("!poll // <titre> // <option1> // <option2> // <optionN> ; ");
+			sb.append("!suicide ; ");
+			sb.append("!random ; ");
+			sb.append("!plant ; ");
+			sb.append("!creator ; ");
+			sb.append("!run ; ");
+			int length = this.getConfig().getListCommandes().size();
+			int inc = 0;
+			for (Commande c : this.getConfig().getListCommandes()) {
+				inc++;
+				if(!c.isRegExp()) {
+					sb.append(c.getNomCommande());
+					if(inc != length)
+						sb.append(" ; ");
+				}
+			}
+			this.sendMessage(channel, sb.toString());
+		}
+
 		// DISCONNECT
 		if (message.equalsIgnoreCase("disconnect")
 				&& (sender.equalsIgnoreCase(channelToJoin) || sender.equalsIgnoreCase("thronghar"))) {
@@ -269,10 +291,11 @@ public class TwitchBot extends PircBot implements Runnable {
 			}
 		}
 
+		// CREATOR
 		if (message.equalsIgnoreCase("!creator") || message.equalsIgnoreCase("!" + this.getName())
 				|| message.equalsIgnoreCase("!bot")) {
 			this.sendMessage(channel, "@" + sender
-					+ ": Ce bot a été réalisé par Barnini Nicholas https://github.com/Barnini-Nicholas/TheSuperUselessBot");
+					+ ": J'ai été réalisé par Barnini Nicholas https://github.com/Barnini-Nicholas/TheSuperUselessBot");
 		}
 	}
 
